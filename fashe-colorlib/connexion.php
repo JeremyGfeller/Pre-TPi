@@ -96,7 +96,7 @@
                             else
                             {
                                 echo "<div class='item-blog p-b-80 t-center'>
-                                    <h2>Connexion</h2><br>";
+                                    <h2>Connexion réussie</h2><br>";
                                         echo loginBox();
                                 echo "</div>";
                             }
