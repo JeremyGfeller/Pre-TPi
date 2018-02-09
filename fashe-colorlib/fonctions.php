@@ -104,7 +104,7 @@ function inscription()
                 <input type='hidden' name='role' value='1'>
                 <input type='text' name='login' placeholder='Entrez votre identifiant'><br><br>
                 <input type='password' name='password' placeholder='Entrez votre mot de passe'><br><br>
-                <input type='submit' name='insert' value='Inscription'>    
+                <input type='submit' value='Inscription'>    
             </form>";
     }  
     return $registration;

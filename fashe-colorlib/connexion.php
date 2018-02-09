@@ -60,11 +60,14 @@
         }
     }
 
-    if(isset($_POST['insert']))
+    if(isset($_POST['firstName']))
     {
         extract($_POST);
         $query = "INSERT INTO users (users_firstName, users_lastName, users_role, users_login, users_password) VALUES ('$firstName', '$lastName', '$role', '$login', password('$password'));";  
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        
+        $_SESSION['IDPersonne'] = $id_users;
+        $_SESSION['UserName'] = "$users_firstName $users_lastName";
     }
     ?>
 <body class="animsition">
