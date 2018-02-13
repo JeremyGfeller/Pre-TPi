@@ -27,6 +27,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS article (
   id_article INT(11) NOT NULL AUTO_INCREMENT,
   article_prix INT(11) NULL DEFAULT NULL,
+  article_quantity INT(11) NULL DEFAULT NULL,
   fk_typeArticle INT(11) NOT NULL,
   fk_brand INT(11) NOT NULL,
   fk_size INT(11) NOT NULL,
@@ -129,3 +130,10 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 INSERT INTO users (users_firstName, users_role, users_login, users_password) VALUES ('admin', '0', 'admin', password('123'));
+
+INSERT INTO brand (id_brand, brand) VALUES ('1', 'Nike');
+INSERT INTO brand (id_brand, brand) VALUES ('2', 'Adidas');
+INSERT INTO brand (id_brand, brand) VALUES ('3', 'Puma');
+
+
+
