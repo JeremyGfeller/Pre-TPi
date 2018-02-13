@@ -26,6 +26,7 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS article (
   id_article INT(11) NOT NULL AUTO_INCREMENT,
+  article_name VARCHAR(45) NULL DEFAULT NULL,
   article_prix INT(11) NULL DEFAULT NULL,
   article_quantity INT(11) NULL DEFAULT NULL,
   fk_typeArticle INT(11) NOT NULL,
@@ -135,5 +136,8 @@ INSERT INTO brand (id_brand, brand) VALUES ('1', 'Nike');
 INSERT INTO brand (id_brand, brand) VALUES ('2', 'Adidas');
 INSERT INTO brand (id_brand, brand) VALUES ('3', 'Puma');
 
+INSERT INTO typearticle (id_typeArticle, typeArticle) VALUES ('1', 'Habit');
+INSERT INTO typearticle (id_typeArticle, typeArticle) VALUES ('2', 'Chaussure');
+INSERT INTO typearticle (id_typeArticle, typeArticle) VALUES ('3', 'Sac à dos');
 
 
