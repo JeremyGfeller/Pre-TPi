@@ -35,6 +35,11 @@
 
 							<li>
 								<a href="product.php">Shop</a>
+								<ul class="sub_menu">
+									<li><a href="#">Habits</a></li>
+									<li><a href="#">Chaussures</a></li>
+									<li><a href="#">Sac à dos</a></li>
+								</ul>
 							</li>
 
 							<li>
@@ -264,11 +269,17 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.php">Home</a>
+						<a href="index.html">Home</a>
 					</li>
 
 					<li class="item-menu-mobile">
 						<a href="product.php">Shop</a>
+                        <ul class="sub-menu">
+							<li><a href="#">Habits</a></li>
+							<li><a href="#">Chaussures</a></li>
+							<li><a href="#">Sac à dos</a></li>
+						</ul>
+						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
