@@ -109,9 +109,4 @@ function inscription()
     }  
     return $registration;
 }
-?>
-
-
-
-
-
+?>  

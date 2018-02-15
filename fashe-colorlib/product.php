@@ -46,6 +46,13 @@
 
         /* Header */
         require_once('top.php');
+        
+        if(isset($_GET['typearticle']))
+        {
+            $typearticle = $_GET['typearticle'];
+        } 
+        
+        echo "GET: "; print_r($_GET); echo "<br>";
         ?>
 
         <!-- Title Page -->
@@ -217,48 +224,40 @@
                         <!-- Product -->
                         <div class="row">
                             <?php
-                                $query = "SELECT quantity, illustration, article_name, article_prix, size, color FROM stock
+                                /*$query = "SELECT id_article, illustration, brand, article_name, article_prix, fk_typeArticle FROM stock
                                             INNER JOIN article on id_article = fk_article
-                                            INNER JOIN size on id_size = fk_size
-                                            INNER JOIN color ON id_color = fk_color;";
+                                            INNER JOIN brand ON fk_brand = id_brand
+                                            where fk_typeArticle = $typearticle
+                                            group by illustration;";*/
+                            
+                                $query = "SELECT id_article, illustration, brand, article_name, article_prix FROM stock
+                                            INNER JOIN article on id_article = fk_article
+                                            INNER JOIN brand ON fk_brand = id_brand
+                                            group by illustration;";
 
                                 $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);   
 
                                 while($article = $articles->fetch()) //fetch = aller chercher
                                 {
-                                    extract($article); // $quantity, $illustration, $article_name, $article_prix, $size, $color
+                                    extract($article); // $id_article, $quantity, $illustration, $brand, $article_name, $article_prix, $size, $color
                                     echo "<div class='col-sm-12 col-md-6 col-lg-4 p-b-50'>
                                             <!-- Block2 -->
                                             <div class='block2'>
-                                            <div class='block2-img wrap-pic-w of-hidden pos-relative'>
-                                            <img src='images/chaussures/$illustration' alt='IMG-PRODUCT'>
+                                                <div class='block2-img wrap-pic-w of-hidden pos-relative'>
+                                                    <a href='product-detail.php?articleid=$id_article'><img src='images/articles/$illustration' alt='IMG-PRODUCT'></a>
+                                                </div>
 
-                                            <div class='block2-overlay trans-0-4'>
-                                                    <a href='#' class='block2-btn-addwishlist hov-pointer trans-0-4'>
-                                                        <i class='icon-wishlist icon_heart_alt' aria-hidden='true'></i>
-                                                        <i class='icon-wishlist icon_heart dis-none' aria-hidden='true'></i>
+                                                <div class='block2-txt p-t-20'>
+                                                    <a href='product-detail.php?articleid=$id_article' class='block2-name dis-block s-text3 p-b-5'>
+                                                        $brand - $article_name
                                                     </a>
 
-                                                    <div class='block2-btn-addcart w-size1 trans-0-4'>
-                                                        <!-- Button -->
-                                                        <button class='flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4'>
-                                                            Ajouter au panier
-                                                        </button>
-                                                    </div>
+                                                    <span class='block2-price m-text6 p-r-5'>
+                                                        $article_prix.-
+                                                    </span>
                                                 </div>
                                             </div>
-
-                                            <div class='block2-txt p-t-20'>
-                                                <a href='product-detail.php' class='block2-name dis-block s-text3 p-b-5'>
-                                                    $article_name
-                                                </a>
-
-                                                <span class='block2-price m-text6 p-r-5'>
-                                                    $article_prix.-
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>";
+                                        </div>";
                                 }
                             ?>
                         </div>

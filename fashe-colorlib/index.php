@@ -45,7 +45,6 @@
     require_once('fonctions.php');
     ConnectDB();
 
-
 	/* Header */
     require_once('top.php');
     ?>
