@@ -84,7 +84,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS size (
   id_size INT(11) NOT NULL AUTO_INCREMENT,
-  size INT(11) NULL DEFAULT NULL,
+  size VARCHAR(5) NULL DEFAULT NULL,
   PRIMARY KEY (id_size))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -182,20 +182,26 @@ INSERT INTO users (users_firstName, users_role, users_login, users_password) VAL
 INSERT INTO brand (brand) VALUES ('Nike');
 INSERT INTO brand (brand) VALUES ('Adidas');
 INSERT INTO brand (brand) VALUES ('Puma');
+INSERT INTO brand (brand) VALUES ('Herschel');
+INSERT INTO brand (brand) VALUES ('G-Star');
 
 INSERT INTO typearticle (typeArticle) VALUES ('Habit');
 INSERT INTO typearticle (typeArticle) VALUES ('Chaussure');
 INSERT INTO typearticle (typeArticle) VALUES ('Sac à dos');
 
 INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('Blazer', '100', '2', '1');
+INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('Blazer LOW', '100', '2', '1');
 INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('Gazelle', '90', '2', '2');
 INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('Classic', '85', '2', '3');
+INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('Retreat', '100', '3', '4');
+INSERT INTO article (article_name, article_prix, fk_typeArticle, fk_brand) VALUES ('ARC-Z 3D SLIM', '120', '1', '5');
 
 INSERT INTO color (color) VALUES ('Noir');
 INSERT INTO color (color) VALUES ('Blanc');
 INSERT INTO color (color) VALUES ('Rouge');
 INSERT INTO color (color) VALUES ('Vert');
 INSERT INTO color (color) VALUES ('Bleu');
+INSERT INTO color (color) VALUES ('Gris');
 
 INSERT INTO size (size) VALUES ('36');
 INSERT INTO size (size) VALUES ('37');
@@ -208,27 +214,29 @@ INSERT INTO size (size) VALUES ('43');
 INSERT INTO size (size) VALUES ('44');
 INSERT INTO size (size) VALUES ('45');
 INSERT INTO size (size) VALUES ('46');
+INSERT INTO size (size) VALUES ('Unique');
+INSERT INTO size (size) VALUES ('XS');
+INSERT INTO size (size) VALUES ('M');
+INSERT INTO size (size) VALUES ('L');
+INSERT INTO size (size) VALUES ('XL');
+INSERT INTO size (size) VALUES ('32x34');
+INSERT INTO size (size) VALUES ('34x34');
+INSERT INTO size (size) VALUES ('36x34');
 
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '1', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '2', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '3', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '4', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '5', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '6', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '7', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '8', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '9', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '10', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '11', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '9', '2');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '10', '2');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '11', '2');
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'classic-noir.jpg', '3', '1', '1');
-/*INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '36', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '37', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '37', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '38', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '38', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '39', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '39', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '40', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '40', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '41', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '41', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '42', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '42', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '43', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '43', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '44', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '44', '2');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '45', '1');
-INSERT INTO stock (quantity, fk_article, fk_size, fk_color) VALUES ('5', '1', '45', '2');*/
-
-
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'herschel-gris.jpg', '5', '12', '6');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'g-star-bleu.jpg', '6', '18', '5');
