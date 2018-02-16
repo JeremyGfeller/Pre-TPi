@@ -43,16 +43,8 @@
         require_once('fonctions.php');
         ConnectDB();
 
-
         /* Header */
         require_once('top.php');
-        
-        if(isset($_GET['typearticle']))
-        {
-            $typearticle = $_GET['typearticle'];
-        } 
-        
-        echo "GET: "; print_r($_GET); echo "<br>";
         ?>
 
         <!-- Title Page -->
@@ -79,32 +71,26 @@
 
                             <ul class="p-b-54">
                                 <li class="p-t-4">
-                                    <a href="#" class="s-text13 active1">
-                                        All
+                                    <a href="product.php" class="s-text13 active1">
+                                        Tout
                                     </a>
                                 </li>
 
                                 <li class="p-t-4">
-                                    <a href="#" class="s-text13">
-                                        Women
+                                    <a href="product.php?typearticle=1" class="s-text13">
+                                        Habits
                                     </a>
                                 </li>
 
                                 <li class="p-t-4">
-                                    <a href="#" class="s-text13">
-                                        Men
+                                    <a href="product.php?typearticle=2" class="s-text13">
+                                        Chaussures
                                     </a>
                                 </li>
 
                                 <li class="p-t-4">
-                                    <a href="#" class="s-text13">
-                                        Kids
-                                    </a>
-                                </li>
-
-                                <li class="p-t-4">
-                                    <a href="#" class="s-text13">
-                                        Accesories
+                                    <a href="product.php?typearticle=3" class="s-text13">
+                                        Sac à dos
                                     </a>
                                 </li>
                             </ul>
@@ -223,19 +209,28 @@
 
                         <!-- Product -->
                         <div class="row">
-                            <?php
-                                /*$query = "SELECT id_article, illustration, brand, article_name, article_prix, fk_typeArticle FROM stock
-                                            INNER JOIN article on id_article = fk_article
-                                            INNER JOIN brand ON fk_brand = id_brand
-                                            where fk_typeArticle = $typearticle
-                                            group by illustration;";*/
-                            
-                                $query = "SELECT id_article, illustration, brand, article_name, article_prix FROM stock
-                                            INNER JOIN article on id_article = fk_article
-                                            INNER JOIN brand ON fk_brand = id_brand
-                                            group by illustration;";
+                            <?php                            
+                                if(isset($_GET['typearticle']))
+                                {
+                                    $typearticle = $_GET['typearticle'];
 
-                                $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);   
+                                    $query2 = "SELECT id_article, illustration, brand, article_name, article_prix, fk_typeArticle FROM stock
+                                                INNER JOIN article on id_article = fk_article
+                                                INNER JOIN brand ON fk_brand = id_brand
+                                                where fk_typeArticle = $typearticle
+                                                group by illustration;";
+                                    
+                                    $articles = $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);   
+                                } 
+                                else
+                                {
+                                    $query = "SELECT id_article, illustration, brand, article_name, article_prix FROM stock
+                                                INNER JOIN article on id_article = fk_article
+                                                INNER JOIN brand ON fk_brand = id_brand
+                                                group by illustration;";
+
+                                    $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                                }                               
 
                                 while($article = $articles->fetch()) //fetch = aller chercher
                                 {
