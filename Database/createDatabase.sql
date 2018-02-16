@@ -237,6 +237,6 @@ INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '9', '2');
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '10', '2');
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '11', '2');
-INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'classic-noir.jpg', '3', '1', '1');
+INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'classic-noir.jpg', '4', '1', '1');
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'herschel-gris.jpg', '5', '12', '6');
 INSERT INTO stock (quantity, illustration, fk_article, fk_size, fk_color) VALUES ('5', 'g-star-bleu.jpg', '6', '18', '5');
