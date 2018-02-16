@@ -30,11 +30,11 @@
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.php">Home</a>
+								<a href="index.php">Accueil</a>
 							</li>
 
 							<li>
-								<a href="product.php">Shop</a>
+								<a href="product.php">Articles</a>
 								<ul class="sub_menu">
 									<li><a href="product.php?typearticle=1">Habits</a></li>
 									<li><a href="product.php?typearticle=2">Chaussures</a></li>

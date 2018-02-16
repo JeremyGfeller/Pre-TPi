@@ -214,8 +214,8 @@
                                 {
                                     $typearticle = $_GET['typearticle'];
 
-                                    $query2 = "SELECT id_article, illustration, brand, article_name, article_prix, fk_typeArticle FROM stock
-                                                INNER JOIN article on id_article = fk_article
+                                    $query2 = "SELECT id_article, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
+                                                INNER JOIN model on id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
                                                 where fk_typeArticle = $typearticle
                                                 group by illustration;";
@@ -224,8 +224,8 @@
                                 } 
                                 else
                                 {
-                                    $query = "SELECT id_article, illustration, brand, article_name, article_prix FROM stock
-                                                INNER JOIN article on id_article = fk_article
+                                    $query = "SELECT id_article, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
+                                                INNER JOIN model on id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
                                                 group by illustration;";
 
@@ -234,7 +234,7 @@
 
                                 while($article = $articles->fetch()) //fetch = aller chercher
                                 {
-                                    extract($article); // $id_article, $quantity, $illustration, $brand, $article_name, $article_prix, $size, $color
+                                    extract($article); // $id_article, $quantity, $illustration, $brand, $model_name, $model_prix
                                     echo "<div class='col-sm-12 col-md-6 col-lg-4 p-b-50'>
                                             <!-- Block2 -->
                                             <div class='block2'>
@@ -244,11 +244,11 @@
 
                                                 <div class='block2-txt p-t-20'>
                                                     <a href='product-detail.php?articleid=$id_article' class='block2-name dis-block s-text3 p-b-5'>
-                                                        $brand - $article_name
+                                                        $brand - $model_name
                                                     </a>
 
                                                     <span class='block2-price m-text6 p-r-5'>
-                                                        $article_prix.-
+                                                        $model_prix.-
                                                     </span>
                                                 </div>
                                             </div>
