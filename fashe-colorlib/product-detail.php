@@ -78,8 +78,8 @@
 	</div-->
 
     <?php
-        $query = "SELECT id_article, quantity, illustration, brand, article_name, article_prix, size, color FROM stock
-                    INNER JOIN article on id_article = fk_article
+        $query = "SELECT id_article, quantity, illustration, brand, model_name, model_prix, size, color FROM article
+                    INNER JOIN model on id_model = fk_model
                     INNER JOIN size on id_size = fk_size
                     INNER JOIN color ON id_color = fk_color
                     INNER JOIN brand ON fk_brand = id_brand
@@ -88,8 +88,8 @@
 
         $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     
-        $query2 = "SELECT id_article, quantity, size, color FROM stock
-                    INNER JOIN article on id_article = fk_article
+        $query2 = "SELECT id_article, quantity, size, color FROM article
+                    INNER JOIN model on id_model = fk_model
                     INNER JOIN size on id_size = fk_size
                     INNER JOIN color ON id_color = fk_color
                     where id_article = $articleid;";
@@ -98,7 +98,7 @@
     
         while($article = $articles->fetch()) //fetch = aller chercher
         {
-            extract($article); // $id_article, $quantity, $illustration, $brand, $article_name, $article_prix, $size, $color
+            extract($article); // $id_article, $quantity, $illustration, $brand, $model_name, $model_prix, $size, $color
             echo "<div class='container bgwhite p-t-35 p-b-80'>
                     <div class='flex-w flex-sb'>
                         <div class='w-size13 p-t-30 respon5'>
@@ -129,11 +129,11 @@
 
                         <div class='w-size14 p-t-30 respon5'>
                             <h4 class='product-detail-name m-text16 p-b-13'>
-                                $brand - $article_name en $color
+                                $brand - $model_name en $color
                             </h4>
 
                             <span class='m-text17'>
-                                $article_prix.-
+                                $model_prix.-
                             </span>
 
                             <p class='s-text8 p-t-10'>
