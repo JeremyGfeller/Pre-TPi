@@ -49,6 +49,16 @@
 							<li>
 								<a href="contact.php">Contact</a>
 							</li>
+
+							<?php 
+                                if(@$_SESSION['role'] == 0 & @$_SESSION['UserName'] != "")
+                                {
+                                    echo "
+                                    <li>
+                                        <a href='admin.php'>Administration</a>
+                                    </li>";
+                                }
+                            ?>							
 						</ul>
 					</nav>
 				</div>
