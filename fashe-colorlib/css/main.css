@@ -2077,22 +2077,25 @@ li.sale-noti > a {
 }
 
 .table-shopping-cart .column-1 {
-  width: 225px;
-  padding-left: 50px;
+  width: 200px;
+  padding-left: 30px;
 }
 .table-shopping-cart .column-2 {
-  width: 330px;
+  width: 200px;
   padding-right: 30px;
 }
 .table-shopping-cart .column-3 {
-  width: 133px;
+  width: 200px;
   padding-right: 30px;
 }
 .table-shopping-cart .column-4 {
-  width: 355px;
+  width: 200px;
   padding-right: 30px;
 }
 .table-shopping-cart .column-5 {
+  padding-right: 30px;
+}
+.table-shopping-cart .column-6 {
   padding-right: 30px;
 }
 
