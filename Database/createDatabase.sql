@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS users (
   users_role INT(11) NULL DEFAULT NULL,
   users_login VARCHAR(30) NULL DEFAULT NULL,
   users_password VARCHAR(50) NULL DEFAULT NULL,
-  users_payment INT NULL,
   PRIMARY KEY (id_users))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
@@ -36,7 +35,6 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS basket (
   id_basket INT(11) NOT NULL AUTO_INCREMENT,
   fk_users INT(11) NOT NULL,
-  status_payment BINARY NULL DEFAULT 0,
   PRIMARY KEY (id_basket),
   INDEX fk_article_has_users_users1_idx (fk_users ASC),
   CONSTRAINT fk_article_has_users_users1
