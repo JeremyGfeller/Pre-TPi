@@ -67,6 +67,7 @@
         {
             $_SESSION['IDPersonne'] = $id_users;
             $_SESSION['UserName'] = "$users_firstName $users_lastName";
+            $_SESSION['role'] = $users_role;
         }
     }
     ?>
