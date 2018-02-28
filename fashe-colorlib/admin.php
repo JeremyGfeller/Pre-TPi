@@ -125,7 +125,7 @@
                                 echo"
                                 <tr class='table-row'>
                                     <td class='column-1'>
-                                        <div class='cart-img-product b-rad-4 o-f-hidden'>
+                                        <div class='cart-img-product b-rad-4'>
                                             <img src='images/articles/$illustration' alt='IMG-PRODUCT'>
                                         </div>
                                     </td>";
@@ -135,7 +135,7 @@
                                         <form method='post' action='admin.php'>
                                             <td class='column-2'>$model_name | en $size</td>
                                             <td class='column-3'>$color</td>
-                                            <td class='column-5'>
+                                            <td class='column-4'>
                                                 <input type='text' name='newPrice' placeholder='Entrez le nouveau prix'/>
                                             </td>
                                             <td class='column-5'>
@@ -175,27 +175,19 @@
                                 </tr>";
                             }
                         ?>
+                        <tr class="table-head">
+							<td></td><td></td><td></td>
+							<td class="column-4"> 
+                                <button type='submit' name='ajouter'>
+                                    <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
+                                </button>
+                            </td>
+						</tr>
 					</table>
 				</div>
 			</div>
 		</div>
 	</section>
-
-    <!--
-
-    <div class='flex-w bo5 of-hidden w-size17'>
-        <button class='btn-num-product-down color1 flex-c-m size7 bg8 eff2'>
-            <i class='fs-12 fa fa-minus' aria-hidden='true'></i>
-        </button>
-
-        <input class='size8 m-text18 t-center num-product' type='number' name='num-product1' value='1'>
-
-        <button class='btn-num-product-up color1 flex-c-m size7 bg8 eff2'>
-            <i class='fs-12 fa fa-plus' aria-hidden='true'></i>
-        </button>
-    </div>
-
-    -->
 
 	<!-- Footer -->
 	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
