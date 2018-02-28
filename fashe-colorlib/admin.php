@@ -53,16 +53,31 @@
         $query = "DELETE FROM article WHERE id_article = $delete;";
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
-    
+        
     if(isset($_POST['appliquer']))
     {
-        $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;
-                  UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
+        if($newQuantity == "" && $newPrice == "")
+        {
+            $query = "UPDATE article SET quantity = $quantity WHERE id_article = $appliquer;
+                      UPDATE model SET model_prix = $modelPrix WHERE id_model = $idModel;";    
+        } 
+        else if($newQuantity != "" && $newPrice != "")
+        {
+            $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;
+                      UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";    
+        } 
+        else if($newQuantity != "")
+        {
+            $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;";
+        } 
+        else if($newPrice != "")
+        {
+            $query = "UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
+        }            
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
     ?>
 	
-
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/connexion.jpg);">
 		<h2 class="l-text2 t-center">
@@ -96,7 +111,7 @@
                         
                             $administrations = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                         
-                            while($administration = $administrations->fetch()) //fetch = aller chercher
+                            while($administration = $administrations->fetch()) 
                             {
                                 extract($administration); // $id_article, $id_model, $quantity, $illustration, $brand, $model_name, $model_prix, $size, $color  
                                 extract($_GET);
@@ -121,7 +136,9 @@
                                             </td>
                                             <td class='column-6'>
                                                 <button type='submit' name='appliquer' value='$id_article'>
-                                                    <input type='hidden' name='idModel' value='$id_model'/>'
+                                                    <input type='hidden' name='idModel' value='$id_model'/>
+                                                    <input type='hidden' name='modelPrix' value='$model_prix'/>
+                                                    <input type='hidden' name='quantity' value='$quantity'/>
                                                     <img src='images/icons/ok.png' alt='IMG-PRODUCT'> 
                                                 </button>
                                             </td>
@@ -156,22 +173,6 @@
 			</div>
 		</div>
 	</section>
-
-    <!--
-
-    <div class='flex-w bo5 of-hidden w-size17'>
-        <button class='btn-num-product-down color1 flex-c-m size7 bg8 eff2'>
-            <i class='fs-12 fa fa-minus' aria-hidden='true'></i>
-        </button>
-
-        <input class='size8 m-text18 t-center num-product' type='number' name='num-product1' value='1'>
-
-        <button class='btn-num-product-up color1 flex-c-m size7 bg8 eff2'>
-            <i class='fs-12 fa fa-plus' aria-hidden='true'></i>
-        </button>
-    </div>
-
-    -->
 
 	<!-- Footer -->
 	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
