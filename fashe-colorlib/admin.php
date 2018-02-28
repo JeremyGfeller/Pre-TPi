@@ -55,9 +55,31 @@
     }
     
     if(isset($_POST['appliquer']))
-    {
-        $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;
-                  UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
+    {  
+        if($newPrice == "" && $newQuantity == "")
+        {
+            echo "toto";
+            $query = "UPDATE article SET quantity = $quantity WHERE id_article = $appliquer;
+                      UPDATE model SET model_prix = $modelPrix WHERE id_model = $idModel;";
+        }
+        else if($newPrice != "" && $newQuantity != "")
+        {   
+            echo "tata";
+            $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;
+                      UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
+        }
+        else if($newPrice != "")
+        {
+            echo "titi";
+            $query = "UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
+        }
+        else if($newQuantity != "")
+        {
+            echo "tutu";
+            $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;";
+        }
+            
+        
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
     ?>
@@ -121,7 +143,9 @@
                                             </td>
                                             <td class='column-6'>
                                                 <button type='submit' name='appliquer' value='$id_article'>
-                                                    <input type='hidden' name='idModel' value='$id_model'/>'
+                                                    <input type='hidden' name='idModel' value='$id_model'/>
+                                                    <input type='hidden' name='quantity' value='$quantity'/>
+                                                    <input type='hidden' name='modelPrix' value='$model_prix'/>
                                                     <img src='images/icons/ok.png' alt='IMG-PRODUCT'> 
                                                 </button>
                                             </td>
