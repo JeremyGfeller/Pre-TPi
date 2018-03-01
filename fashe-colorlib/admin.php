@@ -58,28 +58,22 @@
     {  
         if($newPrice == "" && $newQuantity == "")
         {
-            echo "toto";
             $query = "UPDATE article SET quantity = $quantity WHERE id_article = $appliquer;
                       UPDATE model SET model_prix = $modelPrix WHERE id_model = $idModel;";
         }
         else if($newPrice != "" && $newQuantity != "")
         {   
-            echo "tata";
             $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;
                       UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
         }
         else if($newPrice != "")
         {
-            echo "titi";
             $query = "UPDATE model SET model_prix = $newPrice WHERE id_model = $idModel;";
         }
         else if($newQuantity != "")
         {
-            echo "tutu";
             $query = "UPDATE article SET quantity = $newQuantity WHERE id_article = $appliquer;";
         }
-            
-        
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
     ?>
@@ -125,7 +119,7 @@
                                 echo"
                                 <tr class='table-row'>
                                     <td class='column-1'>
-                                        <div class='cart-img-product b-rad-4'>
+                                        <div class='cart-img-product b-rad-4 o-f-hidden'>
                                             <img src='images/articles/$illustration' alt='IMG-PRODUCT'>
                                         </div>
                                     </td>";
@@ -175,15 +169,49 @@
                                 </tr>";
                             }
                         ?>
-                        <tr class="table-head">
-							<td></td><td></td><td></td>
-							<td class="column-4"> 
-                                <button type='submit' name='ajouter'>
-                                    <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
-                                </button>
-                            </td>
-						</tr>
 					</table>
+                    <?php
+                        echo"
+                        <div class='col-md-12 col-lg-12 p-b-75 t-center'>
+                            <br>
+                            <h2>Ajouter un nouvel article</h2>
+                            <form method='post' action='admin.php'>
+                                <div class='form'>
+                                    IMAGES
+                                </div>
+                                <div class='form'>
+                                    <input type='text' name='newarticlemarque' placeholder='Marque du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <input type='text' name='newarticlemodele' placeholder='Modèle du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <select name='Taille' id='taille'/>";
+                                        /*FAIRE UNE REQUETE AVEC LES TAILLES ET LES METTRE DANS UNE LISTE DéROULANTE
+                                        SELECT id_size, size FROM yonik.size;
+                                        <option value='1'>1</option>*/
+                                    echo"
+                                    </select>
+                    
+                                    <input type='text' name='newarticletaille' placeholder='Taille du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <input type='text' name='newarticlecolor' placeholder='Couleur du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <input type='text' name='newarticleprice' placeholder='Prix du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <input type='text' name='newarticlequantity' placeholder='Quantité du produit'/>
+                                </div>
+                                <div class='form'>
+                                    <button type='submit' name='create'>
+                                        <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
+                                    </button>
+                                </div>
+                            </form>
+                        </div>";
+                    ?>
 				</div>
 			</div>
 		</div>
