@@ -124,6 +124,8 @@ CREATE TABLE IF NOT EXISTS article (
   id_article INT NOT NULL AUTO_INCREMENT,
   quantity INT NOT NULL DEFAULT 0,
   illustration TEXT NULL,
+  illustration1 TEXT NULL,
+  illustration2 TEXT NULL,
   fk_color INT(11) NOT NULL,
   fk_size INT(11) NOT NULL,
   fk_model INT NOT NULL,
@@ -223,17 +225,17 @@ INSERT INTO size (size) VALUES ('32x34');
 INSERT INTO size (size) VALUES ('34x34');
 INSERT INTO size (size) VALUES ('36x34');
 
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '1', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '2', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '3', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '4', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '5', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '6', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '7', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '8', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '9', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '10', '1');
-INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-noir.jpg', '1', '11', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '1', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '2', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '3', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '4', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '5', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '6', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '7', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '8', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '9', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '10', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-noir.jpg', 'blazer-noir1.jpg', 'blazer-noir2.jpg', '1', '11', '1');
 INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '9', '2');
 INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '10', '2');
 INSERT INTO article (quantity, illustration, fk_model, fk_size, fk_color) VALUES ('5', 'blazer-blanche-low.jpg', '2', '11', '2');
