@@ -76,6 +76,9 @@
         }
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
+    
+    /*if(isset($_POST['create']))
+    {}*/
     ?>
 	
 
@@ -186,14 +189,18 @@
                                     <input type='text' name='newarticlemodele' placeholder='Modèle du produit'/>
                                 </div>
                                 <div class='form'>
-                                    <select name='Taille' id='taille'/>";
-                                        /*FAIRE UNE REQUETE AVEC LES TAILLES ET LES METTRE DANS UNE LISTE DéROULANTE
-                                        SELECT id_size, size FROM yonik.size;
-                                        <option value='1'>1</option>*/
+                                    <select name='taille' id='taille'/>";
+                    
+                                        $query = " SELECT id_size, size FROM size;";
+                                        $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+                                        while($size = $sizes->fetch()) //fetch = aller chercher
+                                        {
+                                            extract($size); //$id_size, $size
+                                            echo "<option value='$id_size'>$size</option>";   
+                                        }
                                     echo"
                                     </select>
-                    
-                                    <input type='text' name='newarticletaille' placeholder='Taille du produit'/>
                                 </div>
                                 <div class='form'>
                                     <input type='text' name='newarticlecolor' placeholder='Couleur du produit'/>
