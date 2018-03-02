@@ -51,9 +51,9 @@
         $articleid = $_GET['articleid'];
     } 
     
-    echo "POST: "; print_r($_POST); echo "<br>";
+    /*echo "POST: "; print_r($_POST); echo "<br>";
     echo "SESSION: "; print_r($_SESSION); echo "<br>";
-    echo "GET: "; print_r($_GET); echo "<br>";
+    echo "GET: "; print_r($_GET); echo "<br>";*/
     ?>
 
     <!-- breadcrumb -->
@@ -79,7 +79,7 @@
 	</div-->
 
     <?php
-        $query = "SELECT id_article, quantity, illustration, brand, model_name, model_prix, size, color FROM article
+        $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                     INNER JOIN model on id_model = fk_model
                     INNER JOIN size on id_size = fk_size
                     INNER JOIN color ON id_color = fk_color
@@ -99,7 +99,7 @@
     
         while($article = $articles->fetch()) //fetch = aller chercher
         {
-            extract($article); // $id_article, $quantity, $illustration, $brand, $model_name, $model_prix, $size, $color
+            extract($article); // $id_article, $quantity, $illustration, $illustration1, $illustration2, $brand, $model_name, $model_prix, $size, $color
             echo "<div class='container bgwhite p-t-35 p-b-80'>
                     <div class='flex-w flex-sb'>
                         <div class='w-size13 p-t-30 respon5'>
@@ -107,21 +107,21 @@
                                 <div class='wrap-slick3-dots'></div>
 
                                 <div class='slick3'>
-                                    <div class='item-slick3' data-thumb='images/thumb-item-01.jpg'>
+                                    <div class='item-slick3' data-thumb='images/articles/$illustration'>
                                         <div class='wrap-pic-w'>
-                                            <img src='images/product-detail-01.jpg' alt='IMG-PRODUCT'>
+                                            <img src='images/articles/$illustration' alt='IMG-PRODUCT'>
                                         </div>
                                     </div>
 
-                                    <div class='item-slick3' data-thumb='images/thumb-item-02.jpg'>
+                                    <div class='item-slick3' data-thumb='images/articles/$illustration1'>
                                         <div class='wrap-pic-w'>
-                                            <img src='images/product-detail-02.jpg' alt='IMG-PRODUCT'>
+                                            <img src='images/articles/$illustration1' alt='IMG-PRODUCT'>
                                         </div>
                                     </div>
 
-                                    <div class='item-slick3' data-thumb='images/thumb-item-03.jpg'>
+                                    <div class='item-slick3' data-thumb='images/articles/$illustration2'>
                                         <div class='wrap-pic-w'>
-                                            <img src='images/product-detail-03.jpg' alt='IMG-PRODUCT'>
+                                            <img src='images/articles/$illustration2' alt='IMG-PRODUCT'>
                                         </div>
                                     </div>
                                 </div>

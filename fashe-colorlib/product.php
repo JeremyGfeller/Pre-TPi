@@ -214,7 +214,7 @@
                                 {
                                     $typearticle = $_GET['typearticle'];
 
-                                    $query2 = "SELECT id_article, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
+                                    $query2 = "SELECT id_article, id_model, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
                                                 INNER JOIN model on id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
                                                 where fk_typeArticle = $typearticle
