@@ -45,8 +45,9 @@
 	/* Header */
     require_once('top.php');
     
-    if(isset($_GET['articleid']))
+    if(isset($_GET['modelid']))
     {
+        $modelid = $_GET['modelid'];
         $articleid = $_GET['articleid'];
     } 
     
@@ -92,7 +93,7 @@
                     INNER JOIN model on id_model = fk_model
                     INNER JOIN size on id_size = fk_size
                     INNER JOIN color ON id_color = fk_color
-                    where id_article = $articleid;";
+                    where id_model = $modelid;";
         
         $details = $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);
     

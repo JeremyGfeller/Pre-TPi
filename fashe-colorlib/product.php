@@ -224,7 +224,7 @@
                                 } 
                                 else
                                 {
-                                    $query = "SELECT id_article, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
+                                    $query = "SELECT id_article, id_model, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
                                                 INNER JOIN model on id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
                                                 group by illustration;";
@@ -234,16 +234,16 @@
 
                                 while($article = $articles->fetch()) //fetch = aller chercher
                                 {
-                                    extract($article); // $id_article, $quantity, $illustration, $brand, $model_name, $model_prix
+                                    extract($article); // $id_article, $id_model, $quantity, $illustration, $brand, $model_name, $model_prix
                                     echo "<div class='col-sm-12 col-md-6 col-lg-4 p-b-50'>
                                             <!-- Block2 -->
                                             <div class='block2'>
                                                 <div class='block2-img wrap-pic-w of-hidden pos-relative'>
-                                                    <a href='product-detail.php?articleid=$id_article'><img src='images/articles/$illustration' alt='IMG-PRODUCT'></a>
+                                                    <a href='product-detail.php?modelid=$id_model&articleid=$id_article'><img src='images/articles/$illustration' alt='IMG-PRODUCT'></a>
                                                 </div>
 
                                                 <div class='block2-txt p-t-20'>
-                                                    <a href='product-detail.php?articleid=$id_article' class='block2-name dis-block s-text3 p-b-5'>
+                                                    <a href='product-detail.php?modelid=$id_model&articleid=$id_article' class='block2-name dis-block s-text3 p-b-5'>
                                                         $brand - $model_name
                                                     </a>
 
