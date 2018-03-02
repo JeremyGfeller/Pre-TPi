@@ -55,6 +55,14 @@
     echo "SESSION: "; print_r($_SESSION); echo "<br>";
     echo "GET: "; print_r($_GET); echo "<br>";*/
 
+    if(isset($_POST['basket']))
+    {
+        echo "";
+        //$query = "";
+        //$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        
+    }
+    
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size
@@ -152,7 +160,7 @@
 
                                     <div class='btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10'>
                                         <!-- Button -->
-                                        <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4'>
+                                        <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
                                             Add to Cart
                                         </button>
                                     </div>
