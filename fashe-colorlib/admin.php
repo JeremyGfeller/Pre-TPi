@@ -173,51 +173,6 @@
                             }
                         ?>
 					</table>
-                    <?php
-                        echo"
-                        <div class='col-md-12 col-lg-12 p-b-75 t-center'>
-                            <br>
-                            <h2>Ajouter un nouvel article</h2>
-                            <form method='post' action='admin.php'>
-                                <div class='form'>
-                                    IMAGES
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlemarque' placeholder='Marque du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlemodele' placeholder='Modèle du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <select name='taille' id='taille'/>";                    
-                                        $query = " SELECT id_size, size FROM size;";
-                                        $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
-                                        while($size = $sizes->fetch()) //fetch = aller chercher
-                                        {
-                                            extract($size); //$id_size, $size
-                                            echo "<option value='$id_size'>$size</option>";   
-                                        }
-                                    echo"
-                                    </select>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlecolor' placeholder='Couleur du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticleprice' placeholder='Prix du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlequantity' placeholder='Quantité du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <button type='submit' name='create'>
-                                        <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
-                                    </button>
-                                </div>
-                            </form>
-                        </div>";
-                    ?>
 				</div>
 			</div>
 		</div>
