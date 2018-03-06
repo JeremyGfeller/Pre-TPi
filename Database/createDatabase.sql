@@ -156,7 +156,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS orderlist (
   id_orderlist INT NOT NULL AUTO_INCREMENT,
-  quantity INT NOT NULL DEFAULT 0,
+  quantity INT NOT NULL DEFAULT 1,
   fk_article INT NOT NULL,
   fk_basket INT(11) NOT NULL,
   PRIMARY KEY (id_orderlist),
