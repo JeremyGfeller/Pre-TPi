@@ -54,13 +54,23 @@
     /*echo "POST: "; print_r($_POST); echo "<br>";
     echo "SESSION: "; print_r($_SESSION); echo "<br>";
     echo "GET: "; print_r($_GET); echo "<br>";*/
-
+    
     if(isset($_POST['basket']))
     {
-        echo "";
-        //$query = "";
-        //$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
+        $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         
+        if ($recherches->rowCount() > 0)
+        {
+            $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($articleid, (select id_basket from basket where fk_users = $IDPersonne));";
+            $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        }
+        else
+        {
+            $query = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);
+                      INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($articleid, (select id_basket from basket where fk_users = $IDPersonne));";
+            $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        }    
     }
     
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
@@ -146,23 +156,15 @@
 
                             <div class='flex-r-m flex-w p-t-10'>
                                 <div class='w-size16 flex-m flex-w'>
-                                    <div class='flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10'>
-                                        <button class='btn-num-product-down color1 flex-c-m size7 bg8 eff2'>
-                                            <i class='fs-12 fa fa-minus' aria-hidden='true'></i>
-                                        </button>
+                                    <div class='flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10'></div>
 
-                                        <input class='size8 m-text18 t-center num-product' type='number' name='num-product' value='1'>
-
-                                        <button class='btn-num-product-up color1 flex-c-m size7 bg8 eff2'>
-                                            <i class='fs-12 fa fa-plus' aria-hidden='true'></i>
-                                        </button>
-                                    </div>
-
-                                    <div class='btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10'>
+                                    <div class='btn-addcart-product-detail size12 trans-0-4 m-t-10 m-b-10'>
                                         <!-- Button -->
-                                        <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
-                                            Add to Cart
-                                        </button>
+                                        <form method='post'>
+                                            <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
+                                                Ajouter au panier
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
