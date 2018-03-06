@@ -43,11 +43,11 @@
 							</li>
 
 							<li>
-								<a href="cart.php">Features</a>
+								<a href="contact.php">Contact</a>
 							</li>
 
 							<li>
-								<a href="contact.php">Contact</a>
+								<a href="cart.php">Panier</a>
 							</li>
 
 							<?php 
