@@ -76,6 +76,30 @@
                             <th class='column-7'>Quantité</th>
 						</tr>
                     <?php
+                        
+                        echo "
+                        <form method='post'>
+                            <td class='column-1'>Images</td>
+                            <td class='column-2'>Marque</td>
+                            <td class='column-3'>Modèle</td>
+                            <td class='column-4'>
+                                <select name='taille' id='taille'/>"; 
+                                    $query = "SELECT id_size, size FROM size;";
+                                    $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+                                    while($size = $sizes->fetch()) //fetch = aller chercher
+                                    {
+                                        extract($size); //$id_size, $size
+                                        echo "<option value='$id_size'>$size</option>";   
+                                    }
+                                echo "
+                                </select>
+                            </td>
+                            <td class='column-5'>Couleur</td>
+                            <td class='column-6'>Prix</td>
+                            <td class='column-7'>Quantité</td>
+                        </form>";
+                        
                         echo"
                         <div class='col-md-12 col-lg-12 p-b-75 t-center'>
                             <form method='post' action='admin.php'>
