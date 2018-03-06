@@ -40,7 +40,7 @@
 
     require_once('fonctions.php');
     ConnectDB();
-
+    extract($_POST);
 
 	/* Header */
     require_once('top.php');
@@ -60,15 +60,21 @@
         $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
         $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         
+        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
+        $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        
+        $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
+        extract($rechercheid);          
+        
         if ($recherches->rowCount() > 0)
         {
-            $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($articleid, (select id_basket from basket where fk_users = $IDPersonne));";
+            $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
             $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         }
         else
         {
             $query = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);
-                      INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($articleid, (select id_basket from basket where fk_users = $IDPersonne));";
+                      INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
             $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         }    
     }
@@ -83,7 +89,7 @@
 
     $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
-    $query2 = "SELECT id_article, quantity, size, color FROM article
+    $query2 = "SELECT id_article, id_size, quantity, size, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size
                 INNER JOIN color ON id_color = fk_color
@@ -134,41 +140,40 @@
                         <p class='s-text8 p-t-10'>
                             Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
                         </p>
-
-                        <div class='p-t-33 p-b-60'>
-                            <div class='flex-m flex-w p-b-10'>
-                                <div class='s-text15 w-size15 t-center'>
-                                    Size
+                        
+                        <form method='post'>
+                            <div class='p-t-33 p-b-60'>
+                                <div class='flex-m flex-w p-b-10'>
+                                    <div class='s-text15 w-size15 t-center'>
+                                        Size
+                                    </div>
+                                        <div class='rs2-select2 rs3-select2 bo4 of-hidden w-size16'>
+                                            <select class='selection-2' name='selectsize'>
+                                                <option>Choose an option</option>";
+                                                while($detail = $details->fetch()) //fetch = aller chercher
+                                                {
+                                                    extract($detail); // $id_article, $id_size, $quantity, $size, $color
+                                                    echo"<option value='$id_size'>$size</option>";
+                                                }
+                                        echo "
+                                        </select>
+                                    </div
                                 </div>
-                                    <div class='rs2-select2 rs3-select2 bo4 of-hidden w-size16'>
-                                        <select class='selection-2' name='size'>
-                                            <option>Choose an option</option>";
 
-                                            while($detail = $details->fetch()) //fetch = aller chercher
-                                            {
-                                                extract($detail); // $id_article, $quantity, $size, $color
-                                                echo"<option>$size</option>";
-                                            }
-                                    echo "
-                                    </select>
-                                </div
-                            </div>
+                                <div class='flex-r-m flex-w p-t-10'>
+                                    <div class='w-size16 flex-m flex-w'>
+                                        <div class='flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10'></div>
 
-                            <div class='flex-r-m flex-w p-t-10'>
-                                <div class='w-size16 flex-m flex-w'>
-                                    <div class='flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10'></div>
-
-                                    <div class='btn-addcart-product-detail size12 trans-0-4 m-t-10 m-b-10'>
-                                        <!-- Button -->
-                                        <form method='post'>
-                                            <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
-                                                Ajouter au panier
-                                            </button>
-                                        </form>
+                                        <div class='btn-addcart-product-detail size12 trans-0-4 m-t-10 m-b-10'>
+                                            <!-- Button -->
+                                                <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
+                                                    Ajouter au panier
+                                                </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                         <div class='p-b-45'>
                             <span class='s-text8'>Categories: Mug, Design</span>

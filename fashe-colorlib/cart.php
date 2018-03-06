@@ -64,13 +64,14 @@
 	<!-- Cart -->
     <?php
     
-    $query = "SELECT id_basket, id_users, id_article, id_orderlist, users_firstName, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand
-              FROM basket
+    $query = "SELECT id_basket, id_users, id_article, id_orderlist, size, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand FROM basket
               inner join orderlist on fk_basket = id_basket
               inner join users on fk_users = id_users
               inner join article on fk_article = id_article
+              inner join size on fk_size = id_size
               inner join model on fk_model = id_model
-              inner join brand on fk_brand = id_brand;";
+              inner join brand on fk_brand = id_brand
+              WHERE fk_users = $IDPersonne;";
     
     $baskets = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     
@@ -85,13 +86,14 @@
 							<th class='column-1'></th>
 							<th class='column-2'>Product</th>
 							<th class='column-3'>Price</th>
+							<th class='column-3'>Taille</th>
 							<th class='column-4'>Quantity</th>
 							<th class='column-3'>Supprimer</th>
 						</tr>";
     
                             while($basket = $baskets->fetch())
                             {
-                                extract($basket); // $id_basket, $id_users, $id_article, $id_orderlist, $users_firstName, $illustration, $orderlist.quantity, $users_lastName, $users_role, $model_name, $model_prix, $brand
+                                extract($basket); // $id_basket, $id_users, $id_article, $id_orderlist, $users_firstName, $size, $illustration, $orderlist.quantity, $users_lastName, $users_role, $model_name, $model_prix, $brand
                                 echo "
                                 <tr class='table-row'>
                                     <td class='column-1'>
@@ -101,6 +103,7 @@
                                     </td>
                                     <td class='column-2'>$brand - $model_name</td>
                                     <td class='column-3'>$model_prix.-</td>
+                                    <td class='column-3'>$size</td>
                                     <td class='column-4'>
                                         <div class='flex-w bo5 of-hidden w-size17'>
                                             <button class='btn-num-product-down color1 flex-c-m size7 bg8 eff2'>
@@ -123,10 +126,12 @@
                                     </td>
                                 </tr>";
                             }
-                        
-                        $query = " SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
-                                   inner join article on fk_article = id_article
-                                   inner join model on fk_model = id_model;";
+                            
+                        $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
+                                  inner join article on fk_article = id_article
+                                  inner join model on fk_model = id_model
+                                  inner join basket on fk_basket = id_basket
+                                  where fk_users = (select fk_users from basket where fk_users = $IDPersonne);";
                         $additions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     
                         if ($additions->rowCount() > 0)
@@ -141,8 +146,16 @@
                             <td></td>
                             <th class='column-2'>
                                 TOTAL
-                            </th>
-                            <td>$total.-</td>
+                            </th>";
+                            if($total != 0)
+                            {
+                                echo "<td>$total.-</td>";
+                            }
+                            else
+                            {
+                                echo "<td>0.-</td>";
+                            }
+                        echo "
                         </tr>
 					</table>
 				</div>
