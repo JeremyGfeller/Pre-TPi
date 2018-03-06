@@ -189,8 +189,7 @@
                                     <input type='text' name='newarticlemodele' placeholder='Modèle du produit'/>
                                 </div>
                                 <div class='form'>
-                                    <select name='taille' id='taille'/>";
-                    
+                                    <select name='taille' id='taille'/>";                    
                                         $query = " SELECT id_size, size FROM size;";
                                         $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
