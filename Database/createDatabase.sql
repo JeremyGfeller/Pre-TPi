@@ -239,6 +239,6 @@ INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_co
 INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-blanche-low.jpg', 'blazer-blanche-low1.jpg', 'blazer-blanche-low2.jpg', '2', '9', '2');
 INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-blanche-low.jpg', 'blazer-blanche-low1.jpg', 'blazer-blanche-low2.jpg', '2', '10', '2');
 INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'blazer-blanche-low.jpg', 'blazer-blanche-low1.jpg', 'blazer-blanche-low2.jpg', '2', '11', '2');
-INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'classic-noir.jpg', 'classic-noir1.jpg', 'classic-noir2.jpg', '4', '1', '1');
+INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'classic-noir.jpg', 'classic-noir1.jpg', 'classic-noir2.jpg', '1', '8', '4');
 INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'herschel-gris.jpg', 'herschel-gris1.jpg', 'herschel-gris2.jpg', '6', '12', '5');
 INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('5', 'g-star-bleu.jpg', 'g-star-bleu1.jpg', 'g-star-bleu2.jpg', '5', '18', '6');
