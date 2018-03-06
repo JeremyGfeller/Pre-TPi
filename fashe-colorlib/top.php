@@ -56,6 +56,9 @@
                                     echo "
                                     <li>
                                         <a href='admin.php'>Administration</a>
+                                        <ul class='sub_menu'>
+                                            <li><a href='addArticle.php'>Ajouter un article</a></li>
+                                        </ul>
                                     </li>";
                                 }
                             ?>							
