@@ -60,7 +60,7 @@ function afficherLogin()
     $login = "";
     if(isset($_SESSION['UserName']))
     {
-        $login .= "Connecté en tant que : $UserName";
+        $login .= "Connecté en tant que: $UserName";
     }
     else
     {
