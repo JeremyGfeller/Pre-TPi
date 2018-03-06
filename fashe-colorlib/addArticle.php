@@ -75,11 +75,16 @@
                             <th class='column-6'>Prix</th>
                             <th class='column-7'>Quantité</th>
 						</tr>
-                    <?php
+                        <?php
                         
                         echo "
                         <form method='post'>
-                            <td class='column-1'>Images</td>
+                            <tr class='table-row'>
+                            <td class='column-1'>
+                                <div class='cart-img-product b-rad-4 o-f-hidden'>
+                                    <img src=''>
+                                </div>
+                            </td>
                             <td class='column-2'>Marque</td>
                             <td class='column-3'>Modèle</td>
                             <td class='column-4'>
@@ -100,7 +105,7 @@
                             <td class='column-7'>Quantité</td>
                         </form>";
                         
-                        echo"
+                        /*echo"
                         <div class='col-md-12 col-lg-12 p-b-75 t-center'>
                             <form method='post' action='admin.php'>
                                 <div class='form'>
@@ -140,7 +145,7 @@
                                     </button>
                                 </div>
                             </form>
-                        </div>";
+                        </div>";*/
                     ?>
 					</table>
 				</div>
