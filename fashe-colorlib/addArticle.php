@@ -47,8 +47,60 @@
     extract($_GET);
     extract($_POST);
     
-    /*if(isset($_POST['create']))
-    {}*/
+    /*if(isset($_POST['PseudoForm']))
+    {
+        $Pseudo = $_POST['PseudoForm'];
+        $MotDePasse = $_POST['MotDePasseForm'];
+
+        $query = "SELECT idJoueur, PseudoJoueur, MotDePasseJoueur FROM poker.joueurs WHERE PseudoJoueur = '$Pseudo'";
+        $connexions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+        $query2 = "INSERT INTO poker.joueurs (PseudoJoueur, MotDePasseJoueur) VALUES ('$Pseudo', PASSWORD('$MotDePasse'))";
+
+        if($connexions->rowCount() > 0)
+        {
+            echo "<div class='ErrorMsg'>Ce pseudo existe déjà</div>";
+        }
+        else
+        {
+            $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);
+            $_SESSION['Pseudo'] = $Pseudo;
+            header('Location: accueil.php');
+        }
+    }*/
+
+    echo "POST: "; print_r($_POST); echo "<br>";
+    if(isset($_POST['create']))
+    {            
+        $brand = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
+        $brands = $dbh->query($brand) or die ("SQL Error in:<br> $brand <br>Error message:".$dbh->errorInfo()[2]);
+        
+        $model = "SELECT id_model, model_name, model_prix, fk_typearticle, fk_brand FROM model WHERE model_name = '$newModel';";
+        $models = $dbh->query($model) or die ("SQL Error in:<br> $model <br>Error message:".$dbh->errorInfo()[2]);
+        
+        $addBrand = "insert into brand (brand) values ('$newBrand');"; 
+        
+        if($brands->rowCount() > 0)
+        {}
+        else
+        {       
+            $dbh->query($addBrand) or die ("SQL Error in:<br> $addBrand <br>Error message:".$dbh->errorInfo()[2]);
+        }
+        
+        $query = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
+        $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
+        extract($rechercheid);
+        
+        $addModel = "insert into model (model_name, model_prix, fk_typearticle, fk_brand) values ('$newModel', '$newPrix', '$typeArticle', '$id_brand');";
+        
+        if($models->rowCount() > 0)
+        {}
+        else
+        {
+            $dbh->query($addModel) or die ("SQL Error in:<br> $addModel <br>Error message:".$dbh->errorInfo()[2]);
+        }
+    }
     ?>
 	
 
@@ -63,9 +115,70 @@
 	<section class="cart bgwhite p-t-70 p-b-100">
 		<div class="container">
 			<!-- Cart item -->
-			<div class="container-table-cart pos-relative">
-				<div class="wrap-table-shopping-cart bgwhite">
-					<table class="table-shopping-cart">
+			<!--div class="container-table-cart pos-relative">
+				<div class="wrap-table-shopping-cart bgwhite"-->
+                    <?php
+                        echo "
+                            <div class='row'>
+                                <div class='col-md-3 p-b-30'></div>
+                                <div class='col-md-6 p-b-30'>
+                                    <form class='leave-comment' method='post'>
+                                        <div class='bo4 of-hidden size15 m-b-20'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newBrand' placeholder='Entrer la marque' required>
+                                        </div>
+
+                                        <div class='bo4 of-hidden size15 m-b-20'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newModel' placeholder='Entrer le modèle'>
+                                        </div>
+                                        
+                                        Taille <br>
+                                        <select name='taille' id='taille' style='padding-right: 150px; margin-bottom: 15px;'/>";
+                                            $query = "SELECT id_size, size FROM size;";
+                                            $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                                            while($size = $sizes->fetch()) //fetch = aller chercher
+                                            {
+                                                extract($size); //$id_size, $size
+                                                echo "<option value='$id_size'>$size</option>";   
+                                            }
+                                        echo"
+                                        </select><br>
+                                        
+                                        Type d'article <br>
+                                        <select name='typeArticle' id='typeArticle' style='padding-right: 150px; margin-bottom: 15px;'/>";
+                                            $query = "SELECT id_typeArticle, typeArticle FROM typearticle;";
+                                            $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                                            while($size = $sizes->fetch()) //fetch = aller chercher
+                                            {
+                                                extract($size); //$id_typeArticle, $typeArticle
+                                                echo "<option value='$id_typeArticle'>$typeArticle</option>";   
+                                            }
+                                        echo"
+                                        </select>
+
+
+                                        <div class='bo4 of-hidden size15 m-b-20'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newPrix' placeholder='Entrer le prix'>
+                                        </div>
+                                        
+                                        <div class='bo4 of-hidden size15 m-b-20'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newcolor' placeholder='Entrer la couleur'>
+                                        </div>
+                                        
+                                        <div class='bo4 of-hidden size15 m-b-20'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newQuantity' placeholder='Entrer la quantité'>
+                                        </div>
+                                        
+                                        <div class='w-size25'>
+                                            <!-- Button -->
+                                            <button class='flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4' name='create'>
+                                                Envoyer
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>";
+                    ?>
+					<!--table class="table-shopping-cart">
 						<tr class="table-head">
 							<th class="column-1">Images</th>
 							<th class="column-2">Marque</th>
@@ -74,82 +187,53 @@
 							<th class="column-5">Couleur</th>
                             <th class='column-6'>Prix</th>
                             <th class='column-7'>Quantité</th>
-						</tr>
+						</tr-->
                         <?php
-                        
+                        /*
                         echo "
                         <form method='post'>
                             <tr class='table-row'>
-                            <td class='column-1'>
-                                <div class='cart-img-product b-rad-4 o-f-hidden'>
-                                    <img src=''>
-                                </div>
-                            </td>
-                            <td class='column-2'>Marque</td>
-                            <td class='column-3'>Modèle</td>
-                            <td class='column-4'>
-                                <select name='taille' id='taille'/>"; 
-                                    $query = "SELECT id_size, size FROM size;";
-                                    $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
-                                    while($size = $sizes->fetch()) //fetch = aller chercher
-                                    {
-                                        extract($size); //$id_size, $size
-                                        echo "<option value='$id_size'>$size</option>";   
-                                    }
-                                echo "
-                                </select>
-                            </td>
-                            <td class='column-5'>Couleur</td>
-                            <td class='column-6'>Prix</td>
-                            <td class='column-7'>Quantité</td>
-                        </form>";
-                        
-                        /*echo"
-                        <div class='col-md-12 col-lg-12 p-b-75 t-center'>
-                            <form method='post' action='admin.php'>
-                                <div class='form'>
-                                    IMAGES
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlemarque' placeholder='Marque du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlemodele' placeholder='Modèle du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <select name='taille' id='taille'/>";                    
-                                        $query = " SELECT id_size, size FROM size;";
+                                <td class='column-1'>
+                                    <div class='cart-img-product b-rad-4 o-f-hidden'>
+                                        <img src=''>
+                                    </div>
+                                </td>
+                                <td class='column-2'>
+                                    <input type='text' name='newBrand' placeholder='Entrer la marque'/>
+                                </td>
+                                <td class='column-3'>
+                                    <input type='text' name='newModel' placeholder='Entrer le modèle'/>
+                                </td>
+                                <td class='column-4'>
+                                    <select name='taille' id='taille'/>"; 
+                                        $query = "SELECT id_size, size FROM size;";
                                         $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
                                         while($size = $sizes->fetch()) //fetch = aller chercher
                                         {
                                             extract($size); //$id_size, $size
                                             echo "<option value='$id_size'>$size</option>";   
                                         }
-                                    echo"
+                                    echo "
                                     </select>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlecolor' placeholder='Couleur du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticleprice' placeholder='Prix du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <input type='text' name='newarticlequantity' placeholder='Quantité du produit'/>
-                                </div>
-                                <div class='form'>
-                                    <button type='submit' name='create'>
+                                </td>
+                                <td class='column-5'>Couleur</td>
+                                <td class='column-6'>Prix</td>
+                                <td class='column-7'>Quantité</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <button type='submit' name='create' style='padding-left: 110px;'>
                                         <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
                                     </button>
-                                </div>
-                            </form>
-                        </div>";*/
+                                </td>
+                            </tr>
+                        </form>"; */
                     ?>
-					</table>
+					<!--/table>
 				</div>
-			</div>
+			</div-->
 		</div>
 	</section>
 
