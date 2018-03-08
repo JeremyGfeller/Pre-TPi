@@ -41,65 +41,79 @@
     require_once('fonctions.php');
     ConnectDB();
 
-
 	/* Header */
     require_once('top.php');
     extract($_GET);
     extract($_POST);
+    extract($_FILES);
     
-    /*if(isset($_POST['PseudoForm']))
-    {
-        $Pseudo = $_POST['PseudoForm'];
-        $MotDePasse = $_POST['MotDePasseForm'];
-
-        $query = "SELECT idJoueur, PseudoJoueur, MotDePasseJoueur FROM poker.joueurs WHERE PseudoJoueur = '$Pseudo'";
-        $connexions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
-        $query2 = "INSERT INTO poker.joueurs (PseudoJoueur, MotDePasseJoueur) VALUES ('$Pseudo', PASSWORD('$MotDePasse'))";
-
-        if($connexions->rowCount() > 0)
-        {
-            echo "<div class='ErrorMsg'>Ce pseudo existe déjà</div>";
-        }
-        else
-        {
-            $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);
-            $_SESSION['Pseudo'] = $Pseudo;
-            header('Location: accueil.php');
-        }
-    }*/
-
     echo "POST: "; print_r($_POST); echo "<br>";
+    echo "FILES: "; print_r($_FILES); echo "<br>";
+    
     if(isset($_POST['create']))
     {            
         $brand = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
         $brands = $dbh->query($brand) or die ("SQL Error in:<br> $brand <br>Error message:".$dbh->errorInfo()[2]);
+   
+        $color = "SELECT id_color, color FROM color WHERE color = '$newColor';";
+        $colors = $dbh->query($color) or die ("SQL Error in:<br> $color <br>Error message:".$dbh->errorInfo()[2]);
         
         $model = "SELECT id_model, model_name, model_prix, fk_typearticle, fk_brand FROM model WHERE model_name = '$newModel';";
         $models = $dbh->query($model) or die ("SQL Error in:<br> $model <br>Error message:".$dbh->errorInfo()[2]);
-        
-        $addBrand = "insert into brand (brand) values ('$newBrand');"; 
-        
+                        
         if($brands->rowCount() > 0)
         {}
         else
-        {       
+        {    
+            $addBrand = "insert into brand (brand) values ('$newBrand');"; 
             $dbh->query($addBrand) or die ("SQL Error in:<br> $addBrand <br>Error message:".$dbh->errorInfo()[2]);
         }
         
-        $query = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
-        $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
-        extract($rechercheid);
+        if($colors->rowCount() > 0)
+        {}
+        else
+        {    
+            $addColor = "insert into color (color) values ('$newColor');";
+            $dbh->query($addColor) or die ("SQL Error in:<br> $addColor <br>Error message:".$dbh->errorInfo()[2]);
+        }
         
-        $addModel = "insert into model (model_name, model_prix, fk_typearticle, fk_brand) values ('$newModel', '$newPrix', '$typeArticle', '$id_brand');";
+        $idBrand = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
+        $rechercheidBrands = $dbh->query($idBrand) or die ("SQL Error in:<br> $idBrand <br>Error message:".$dbh->errorInfo()[2]);
+        $rechercheidBrand = $rechercheidBrands->fetch(); //fetch = aller chercher
+        extract($rechercheidBrand);
+        
+        $idColor = "SELECT id_color, color FROM color WHERE color = '$newColor';";
+        $rechercheidColors = $dbh->query($idColor) or die ("SQL Error in:<br> $idColor <br>Error message:".$dbh->errorInfo()[2]);
+        $rechercheidColor = $rechercheidColors->fetch(); //fetch = aller chercher
+        extract($rechercheidColor);
         
         if($models->rowCount() > 0)
         {}
         else
         {
+            $addModel = "insert into model (model_name, model_prix, fk_typearticle, fk_brand) values ('$newModel', '$newPrix', '$typeArticle', '$id_brand');";
             $dbh->query($addModel) or die ("SQL Error in:<br> $addModel <br>Error message:".$dbh->errorInfo()[2]);
         }
+        
+        $idModel = "SELECT id_model, model_name FROM model WHERE model_name = '$newModel';";
+        $rechercheidModels = $dbh->query($idModel) or die ("SQL Error in:<br> $idModel <br>Error message:".$dbh->errorInfo()[2]);
+        $rechercheidModel = $rechercheidModels->fetch(); //fetch = aller chercher
+        extract($rechercheidModel);
+
+        if(isset($_FILES['illustration']) || isset($_FILES['illustration1']) || isset($_FILES['illustration2']))
+        {    
+            @$Extension = pathinfo($_FILES['illustration']['name'], PATHINFO_EXTENSION);
+            @$illustration = $_FILES['illustration']['name'];
+            
+            @$Extension1 = pathinfo($_FILES['illustration1']['name'], PATHINFO_EXTENSION);
+            @$illustration1 = $_FILES['illustration1']['name']; 
+            
+            @$Extension2 = pathinfo($_FILES['illustration2']['name'], PATHINFO_EXTENSION);
+            @$illustration2 = $_FILES['illustration2']['name']; 
+
+            $addArticle = "INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('$newQuantity', '$illustration', '$illustration1', '$illustration2', '$id_color', '$taille', '$id_model');";
+            $dbh->query($addArticle) or die ("SQL Error in:<br> $addArticle <br>Error message:".$dbh->errorInfo()[2]);
+        }           
     }
     ?>
 	
@@ -122,7 +136,11 @@
                             <div class='row'>
                                 <div class='col-md-3 p-b-30'></div>
                                 <div class='col-md-6 p-b-30'>
-                                    <form class='leave-comment' method='post'>
+                                    <form method='post' class='leave-comment' enctype='multipart/form-data'>
+                                        Première illustration: <input type='file' name='illustration' style='margin-bottom: 15px;'><br>
+                                        Deuxième illustration: <input type='file' name='illustration1' style='margin-bottom: 15px;'><br>
+                                        Troisième illustration: <input type='file' name='illustration2'><br><br>
+                                        
                                         <div class='bo4 of-hidden size15 m-b-20'>
                                             <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newBrand' placeholder='Entrer la marque' required>
                                         </div>
@@ -132,7 +150,7 @@
                                         </div>
                                         
                                         Taille <br>
-                                        <select name='taille' id='taille' style='padding-right: 150px; margin-bottom: 15px;'/>";
+                                        <select name='taille' id='taille' style='padding-right: 175px; margin-top: 10px; margin-bottom: 15px;'/>";
                                             $query = "SELECT id_size, size FROM size;";
                                             $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                                             while($size = $sizes->fetch()) //fetch = aller chercher
@@ -144,7 +162,7 @@
                                         </select><br>
                                         
                                         Type d'article <br>
-                                        <select name='typeArticle' id='typeArticle' style='padding-right: 150px; margin-bottom: 15px;'/>";
+                                        <select name='typeArticle' id='typeArticle' style='padding-right: 150px; margin-top: 10px; margin-bottom: 15px;'/>";
                                             $query = "SELECT id_typeArticle, typeArticle FROM typearticle;";
                                             $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                                             while($size = $sizes->fetch()) //fetch = aller chercher
@@ -161,7 +179,7 @@
                                         </div>
                                         
                                         <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newcolor' placeholder='Entrer la couleur'>
+                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newColor' placeholder='Entrer la couleur'>
                                         </div>
                                         
                                         <div class='bo4 of-hidden size15 m-b-20'>
