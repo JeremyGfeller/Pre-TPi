@@ -60,9 +60,8 @@
         $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
         $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         
-        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
+        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid and id_article = $articleid;";
         $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        
         $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
         extract($rechercheid);          
         
@@ -89,11 +88,18 @@
 
     $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
-    $query2 = "SELECT id_article, id_size, quantity, size, color FROM article
+    /*$query2 = "SELECT id_article, id_size, quantity, size, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size
                 INNER JOIN color ON id_color = fk_color
-                where id_model = $modelid;";
+                where id_model = $modelid;";*/
+    
+    $query2 = "SELECT id_article, id_model, model_name, id_size, quantity, size, id_color, color FROM article
+                INNER JOIN model on id_model = fk_model
+                INNER JOIN size on id_size = fk_size
+                INNER JOIN color ON id_color = fk_color
+                where id_model = $modelid 
+                AND id_color = (SELECT fk_color FROM article where fk_model = $modelid and id_article = $articleid);";
 
     $details = $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);
 
@@ -164,7 +170,7 @@
                                     <div class='w-size16 flex-m flex-w'>
                                         <div class='flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10'></div>
 
-                                        <div class='btn-addcart-product-detail size12 trans-0-4 m-t-10 m-b-10'>
+                                        <div class='size12 trans-0-4 m-t-10 m-b-10'>
                                             <!-- Button -->
                                                 <button class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4' name='basket'>
                                                     Ajouter au panier
