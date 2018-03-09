@@ -60,7 +60,7 @@
         $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
         $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         
-        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid and id_article = $articleid;";
+        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
         $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
         extract($rechercheid);          
