@@ -48,10 +48,17 @@
     extract($_POST);
     
     if(isset($_POST['delete']))
-    {
-        echo "POST";
-        $query = "DELETE FROM article WHERE id_article = $delete;";
-        $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+    {    
+        $model = "SELECT id_orderlist, quantity, fk_article, fk_basket FROM orderlist WHERE fk_article = $delete;";
+        $models = $dbh->query($model) or die ("SQL Error in:<br> $model <br>Error message:".$dbh->errorInfo()[2]);
+        
+        if($models->rowCount() > 0)
+        {
+            $query = "DELETE FROM orderlist WHERE fk_article = $delete;";
+            $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        }           
+        $delArticle = "DELETE FROM article WHERE id_article = $delete;";
+        $dbh->query($delArticle) or die ("SQL Error in:<br> $delArticle <br>Error message:".$dbh->errorInfo()[2]);
     }
     
     if(isset($_POST['appliquer']))
@@ -76,9 +83,6 @@
         }
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
-    
-    /*if(isset($_POST['create']))
-    {}*/
     ?>
 	
 
