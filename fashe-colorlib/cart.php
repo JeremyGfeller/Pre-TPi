@@ -48,7 +48,7 @@
     
     if(isset($_POST['deleteBasket']))
     {
-        $query = "DELETE FROM orderlist WHERE id_orderlist='$deleteBasket';";
+        $query = "DELETE FROM orderlist WHERE fk_article = '$deleteBasket';";
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
     ?>
@@ -119,7 +119,7 @@
                                     </td>
                                     <td class='column-5'>
                                         <form method='post'>
-                                            <button type='submit' name='deleteBasket' value='$id_orderlist'>
+                                            <button type='submit' name='deleteBasket' value='$id_article'>
                                                 <img src='images/icons/effacer.png' alt='IMG-PRODUCT'> 
                                             </button>
                                         </form>
