@@ -87,12 +87,6 @@
                 group by id_article;"; 
 
     $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
-    /*$query2 = "SELECT id_article, id_size, quantity, size, color FROM article
-                INNER JOIN model on id_model = fk_model
-                INNER JOIN size on id_size = fk_size
-                INNER JOIN color ON id_color = fk_color
-                where id_model = $modelid;";*/
     
     $query2 = "SELECT id_article, id_model, model_name, id_size, quantity, size, id_color, color FROM article
                 INNER JOIN model on id_model = fk_model
