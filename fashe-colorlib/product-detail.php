@@ -57,25 +57,36 @@
     
     if(isset($_POST['basket']))
     {
-        $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
-        $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        
-        $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
-        $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
-        extract($rechercheid);          
-        
-        if ($recherches->rowCount() > 0)
+        if(isset($UserName))
         {
-            $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-            $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+            $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
+            $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+            $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
+            $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+            $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
+            extract($rechercheid);          
+
+            if ($recherches->rowCount() > 0)
+            {
+                $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+                $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+            }
+            else
+            {
+                $query = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);
+                          INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+                $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+            } 
         }
         else
         {
-            $query = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);
-                      INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-            $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        }    
+            echo "<section style='padding: 10px;'>
+                    <h2 class='t-center'>
+                        Merci de vous connecter pour commander cette article 
+                    </h2>
+                  </section>";
+        }
     }
     
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
@@ -148,8 +159,7 @@
                                         Size
                                     </div>
                                         <div class='rs2-select2 rs3-select2 bo4 of-hidden w-size16'>
-                                            <select class='selection-2' name='selectsize'>
-                                                <option>Choose an option</option>";
+                                            <select class='selection-2' name='selectsize'>";
                                                 while($detail = $details->fetch()) //fetch = aller chercher
                                                 {
                                                     extract($detail); // $id_article, $id_size, $quantity, $size, $color
