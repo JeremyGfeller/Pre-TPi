@@ -1,4 +1,8 @@
-<? php include_once('fonctions.php'); ?>
+<?php 
+include_once('fonctions.php');
+ConnectDB();
+extract($_SESSION);
+?>
 
 <header class="header1">
 		<!-- Header desktop -->
@@ -80,58 +84,77 @@
 
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
-									</div>
+                                <?php
+                                    if(isset($IDPersonne))
+                                    {
+                                        $query = "SELECT id_basket, id_users, id_article, color, id_orderlist, size, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand FROM basket
+                                              inner join orderlist on fk_basket = id_basket
+                                              inner join users on fk_users = id_users
+                                              inner join article on fk_article = id_article
+                                              inner join size on fk_size = id_size
+                                              inner join color on fk_color = id_color
+                                              inner join model on fk_model = id_model
+                                              inner join brand on fk_brand = id_brand
+                                              WHERE fk_users = $IDPersonne;";
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
+                                        $baskets = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
+                                        while($basket = $baskets->fetch())
+                                        {
+                                            extract($basket); // $id_basket, $id_users, $id_article, $color, $id_orderlist, $users_firstName, $size, $illustration, $orderlist.quantity, $users_lastName, $users_role, $model_name, $model_prix, $brand
+                                            echo "
+                                            <ul class='header-cart-wrapitem'>
+                                                <li class='header-cart-item'>
+                                                    <div class='header-cart-item-img'>
+                                                        <img src='images/articles/$illustration' alt='IMG'>
+                                                    </div>
 
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
+                                                    <div class='header-cart-item-txt'>
+                                                        <a href='cart.php' class='header-cart-item-name'>
+                                                            $brand - $model_name en $color
+                                                        </a>
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
-							</ul>
+                                                        <span class='header-cart-item-info'>
+                                                            $model_prix.-
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </ul>";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "Veuillez vous connecter";
+                                    }
+                                ?>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								<?php
+                                    if(isset($IDPersonne))
+                                    {
+                                        $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
+                                                  inner join article on fk_article = id_article
+                                                  inner join model on fk_model = id_model
+                                                  inner join basket on fk_basket = id_basket
+                                                  where fk_users = (select fk_users from basket where fk_users = $IDPersonne);";
+                                        $additions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+                                        if ($additions->rowCount() > 0)
+                                        {
+                                            $addition = $additions->fetch(); 
+                                            extract($addition); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
+                                        }
+                                        
+                                        if($total != 0)
+                                        {
+                                            echo "Total: $total.-";
+                                        }
+                                        else
+                                        {
+                                            echo "Panier vide";
+                                        }
+                                    }
+                                ?>
 							</div>
 
 							<div class="header-cart-buttons">
