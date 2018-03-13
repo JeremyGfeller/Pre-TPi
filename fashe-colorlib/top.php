@@ -80,12 +80,31 @@ extract($_SESSION);
 
 					<div class="header-wrapicon2">
 						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+						<span class="header-icons-noti">
+                            <?php
+                                    /*$query = "SELECT count(id_basket) as sumArticle, id_users, id_orderlist, orderlist.quantity FROM basket
+                                            inner join orderlist on fk_basket = id_basket
+                                            inner join users on fk_users = id_users
+                                            WHERE fk_users = $IDPersonne;";  
+
+                                    $sumArticles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);*/
+                                                                  
+                                    if(isset($_SESSION['IDPersonne']))
+                                    {
+                                        echo "1";
+                                    }
+                                    else
+                                    {
+                                        echo "0";
+                                    }
+                                
+                            ?>
+                        </span>
 
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
                                 <?php
-                                    if(isset($IDPersonne))
+                                    if(isset($_SESSION['IDPersonne']))
                                     {
                                         $query = "SELECT id_basket, id_users, id_article, color, id_orderlist, size, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand FROM basket
                                               inner join orderlist on fk_basket = id_basket
@@ -130,7 +149,7 @@ extract($_SESSION);
 
 							<div class="header-cart-total">
 								<?php
-                                    if(isset($IDPersonne))
+                                    if(isset($_SESSION['IDPersonne']))
                                     {
                                         $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
                                                   inner join article on fk_article = id_article
