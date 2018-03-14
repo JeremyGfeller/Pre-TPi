@@ -47,8 +47,8 @@
     extract($_POST);
     extract($_FILES);
     
-    echo "POST: "; print_r($_POST); echo "<br>";
-    echo "FILES: "; print_r($_FILES); echo "<br>";
+    /*echo "POST: "; print_r($_POST); echo "<br>";
+    echo "FILES: "; print_r($_FILES); echo "<br>";*/
     
     if(isset($_POST['create']))
     {            
