@@ -1,4 +1,3 @@
-<meta charset="utf-8"/>
 <?php
 @session_start();
 extract($_SESSION);
