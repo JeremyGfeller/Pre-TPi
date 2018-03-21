@@ -324,26 +324,41 @@ extract($_SESSION);
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
+						<a href="index.php">Accueil</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.php">Shop</a>
+						<a href="product.php">Articles</a>
                         <ul class="sub-menu">
 							<li><a href="product.php?typearticle=1">Habits</a></li>
-                            <li><a href="product.php?typearticle=2">Chaussures</a></li>
-                            <li><a href="product.php?typearticle=3">Sac à dos</a></li>
+							<li><a href="product.php?typearticle=2">Chaussures</a></li>
+							<li><a href="product.php?typearticle=3">Sac à dos</a></li>
 						</ul>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.php">Features</a>
+						<a href="contact.php">Contact</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="contact.php">Contact</a>
+						<a href="cart.php">Panier</a>
 					</li>
+
+					<?php 
+						if(@$_SESSION['role'] == 0 & @$_SESSION['UserName'] != "")
+						{
+							echo "
+								<li class='item-menu-mobile'>
+									<a href='admin.php'>Administration</a>
+									<ul class='sub-menu'>
+									<li><a href='addArticle.php'>Ajouter un article</a></li>
+									</ul>
+									<i class='arrow-main-menu fa fa-angle-right' aria-hidden='true'></i>
+								</li>
+							";
+						}
+					?>	
 				</ul>
 			</nav>
 		</div>
