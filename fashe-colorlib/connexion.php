@@ -44,9 +44,19 @@
         extract($_POST);
         $query = "INSERT INTO users (users_firstName, users_lastName, users_role, users_login, users_password) VALUES ('$firstName', '$lastName', '$role', '$login', password('$password'));";  
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-        
-        $_SESSION['IDPersonne'] = $id_users;
-        $_SESSION['UserName'] = "$firstName $lastName";
+		
+		$query = "SELECT id_users, users_firstName, users_lastName, users_role, users_login, users_password, password('$password') as hashPassword FROM users where users_login = '$login';";
+        $connexions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+        if ($connexions->rowCount() > 0)
+        {
+            $connexion = $connexions->fetch(); 
+			extract($connexion); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
+		}
+		
+		$_SESSION['IDPersonne'] = $id_users;
+		$_SESSION['UserName'] = "$firstName $lastName";
+		$_SESSION['role'] = $role;
     }
     
     if(isset($_POST['login']))
