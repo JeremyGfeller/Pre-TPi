@@ -86,10 +86,10 @@
                         <table class='table-shopping-cart'>
                             <tr class='table-head'>
                                 <th class='column-1'></th>
-                                <th class='column-2'>Product</th>
-                                <th class='column-3'>Price</th>
+                                <th class='column-2'>Produit</th>
+                                <th class='column-3'>Prix</th>
                                 <th class='column-3'>Taille</th>
-                                <th class='column-4'>Quantity</th>
+                                <th class='column-4'>Quantité</th>
                                 <th class='column-3'>Supprimer</th>
                             </tr>";
 
