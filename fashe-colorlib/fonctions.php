@@ -28,29 +28,33 @@ function ConnectDB()
     }
 }
 
-function Connexion()
-{
-    if(isset($_SESSION['UserName']))
-    {
-        return true;
-        echo $UserName;
-    }
-    else
-    {
-        return false;  
-        echo "Pas connecté";
-    }    
-}
-
 if(isset($_POST['deconnexion']))
 {
     unset($_SESSION['IDPersonne']);
     unset($_SESSION['UserName']);
 }
 
-if(isset($_POST['profil']))
+function panier()
 {
-    header("Location: profil.php");
+    global $dbh;
+    extract($_SESSION);
+    $sum = "";
+    if(isset($IDPersonne))
+    {
+        $query = "select count(id_orderlist) as somme from orderlist where fk_basket = $IDPersonne;";
+        $sumArticles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+        if ($sumArticles->rowCount() > 0)
+        {
+            $sumArticle = $sumArticles->fetch();
+            extract($sumArticle);
+            $sum .= "$somme";
+        }
+    }
+    else
+    {
+        $sum .= "0";
+    }
+    return $sum;
 }
 
 function afficherLogin()
