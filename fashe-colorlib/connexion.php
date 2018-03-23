@@ -52,11 +52,10 @@
         {
             $connexion = $connexions->fetch(); 
 			extract($connexion); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
+			$_SESSION['IDPersonne'] = $id_users;
+			$_SESSION['UserName'] = "$firstName $lastName";
+			$_SESSION['role'] = $role;
 		}
-		
-		$_SESSION['IDPersonne'] = $id_users;
-		$_SESSION['UserName'] = "$firstName $lastName";
-		$_SESSION['role'] = $role;
     }
     
     if(isset($_POST['login']))
@@ -70,15 +69,23 @@
         if ($connexions->rowCount() > 0)
         {
             $connexion = $connexions->fetch(); 
-            extract($connexion); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
-        }
-
-        if($users_password == $hashPassword)
-        {
-            $_SESSION['IDPersonne'] = $id_users;
-            $_SESSION['UserName'] = "$users_firstName $users_lastName";
-            $_SESSION['role'] = $users_role;
-        }
+			extract($connexion); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
+			
+			if($users_password == $hashPassword)
+			{
+				$_SESSION['IDPersonne'] = $id_users;
+				$_SESSION['UserName'] = "$users_firstName $users_lastName";
+				$_SESSION['role'] = $users_role;
+			}
+		}
+		else
+		{
+			echo "<section style='margin-top: 150px;'>
+					<h2 class='t-center'>
+						Login ou mot de passe faux 
+					</h2>
+				</section>";
+		}
     }
     ?>
 <body class="animsition">
@@ -92,7 +99,7 @@
 			<div class="row">
 				<div class="col-md-12 col-lg-12 p-b-75">
 					<div class="p-r-50 p-r-0-lg">
-                        <?php
+                        <?php	
                             if(!isset($_SESSION['IDPersonne']))
                             {
                                 echo "<div class='item-blog p-b-80 t-center'>
