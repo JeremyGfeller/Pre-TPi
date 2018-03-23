@@ -86,7 +86,9 @@
                         Merci de vous connecter pour commander cette article 
                     </h2>
                   </section>";
-        }
+		}
+		$query = "update article set quantity = quantity - 1 where id_article = $articleid;";
+		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
     
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
@@ -162,8 +164,15 @@
                                             <select class='selection-2' name='selectsize'>";
                                                 while($detail = $details->fetch()) //fetch = aller chercher
                                                 {
-                                                    extract($detail); // $id_article, $id_size, $quantity, $size, $color
-                                                    echo"<option value='$id_size'>$size</option>";
+													extract($detail); // $id_article, $id_size, $quantity, $size, $color
+													if($quantity > 0)
+													{
+														echo"<option value='$id_size'>$size</option>";
+													}
+													else
+													{
+														echo"<option value='$id_size'>Article épuisé en $size</option>";
+													}
                                                 }
                                         echo "
                                         </select>
