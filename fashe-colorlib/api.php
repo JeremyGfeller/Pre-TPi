@@ -4,15 +4,13 @@
     ConnectDB();
     extract($_GET);
 
-    //echo "action = $action, id = $id";
-
-    //$query = "SELECT id_article, quantity FROM article WHERE id_article = $id;";
     $query = "SELECT id_article, illustration, quantity, brand, model_name, model_prix, size, color FROM article
                 inner join model on fk_model = id_model
                 inner join size on fk_size = id_size
                 inner join color on fk_color = id_color
                 inner join brand on fk_brand = id_brand
                 where id_article = $id;";
+                
     $quantitys = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
     while($quantity = $quantitys->fetch()) //fetch = aller chercher
