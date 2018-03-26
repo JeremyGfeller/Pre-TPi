@@ -34,17 +34,14 @@
 <body class="animsition">
 
 	<?php
-    //----------------------------- Démarrage SESSION ----------------------------------------
 
     session_start();
-
     require_once('fonctions.php');
     ConnectDB();
-    extract($_POST);
-
-	/* Header */
     require_once('top.php');
     
+    extract($_POST);
+
     if(isset($_GET['modelid']))
     {
         $modelid = $_GET['modelid'];
@@ -74,9 +71,11 @@
             }
             else
             {
-                $query = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);
-                          INSERT INTO orderlist (quantity, fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-                $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                $createUserBasket = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);";
+                $addArticle = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+
+                $dbh->query($createUserBasket) or die ("SQL Error in:<br> $createUserBasket <br>Error message:".$dbh->errorInfo()[2]);
+                $dbh->query($addArticle) or die ("SQL Error in:<br> $addArticle <br>Error message:".$dbh->errorInfo()[2]);
             } 
         }
         else
