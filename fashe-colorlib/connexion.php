@@ -38,7 +38,6 @@
 
     require_once('fonctions.php');
     ConnectDB();
-	require_once('top.php');
 
     if(isset($_POST['firstName']))
     {
@@ -102,6 +101,7 @@
 			}
 		}
     }
+	require_once('top.php');
     ?>
 	<body class="animsition">
 		<!-- content page -->

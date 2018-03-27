@@ -121,7 +121,7 @@
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/connexion.jpg);">
 		<h2 class="l-text2 t-center">
-			Ajouter un article 
+			<font color="black"> Ajouter un article </font>
 		</h2>
 	</section>
 
