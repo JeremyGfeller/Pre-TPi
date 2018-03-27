@@ -44,6 +44,9 @@
     
     if(isset($_POST['deleteBasket']))
     {
+		$query = "UPDATE article set quantity = quantity + (SELECT quantity FROM orderlist WHERE fk_article = $deleteBasket) WHERE id_article = $deleteBasket;";
+		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
         $query = "DELETE FROM orderlist WHERE fk_article = '$deleteBasket';";
 		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 	}
@@ -107,11 +110,16 @@
                                     <td class='column-3'>$size</td>
                                     <td class='column-4'>
 										<select class='selection-2' name='quantity'>
-											<option value='1'>1</option>
-											<option value='2'>2</option>
-											<option value='3'>3</option>
-											<option value='4'>4</option>
-											<option value='5'>5</option>
+											<optgroup label='Quantité'>
+												<option value='$quantity'>$quantity</option>
+											</optgroup>
+											<optgroup label='Changer la quantité'>
+												<option value='1'>1</option>
+												<option value='2'>2</option>
+												<option value='3'>3</option>
+												<option value='4'>4</option>
+												<option value='5'>5</option>
+											</optgroup>	
 										</select>
                                     </td>
                                     <td class='column-5'>
