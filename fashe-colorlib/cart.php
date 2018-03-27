@@ -132,11 +132,12 @@
                                 </tr>";
                             }
 
-                            $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
+                            $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix * orderlist.quantity) as total FROM yonik.orderlist
                                       inner join article on fk_article = id_article
                                       inner join model on fk_model = id_model
                                       inner join basket on fk_basket = id_basket
                                       where fk_users = (select fk_users from basket where fk_users = $IDPersonne);";
+
                             $additions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
                             if ($additions->rowCount() > 0)
