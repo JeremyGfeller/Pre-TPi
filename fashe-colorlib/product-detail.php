@@ -62,21 +62,32 @@
             $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
             $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
             $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
-            extract($rechercheid);          
+            @extract($rechercheid);          
 
-            if ($recherches->rowCount() > 0)
-            {
-                $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-                $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-            }
-            else
-            {
-                $createUserBasket = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);";
-                $addArticle = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-
-                $dbh->query($createUserBasket) or die ("SQL Error in:<br> $createUserBasket <br>Error message:".$dbh->errorInfo()[2]);
-                $dbh->query($addArticle) or die ("SQL Error in:<br> $addArticle <br>Error message:".$dbh->errorInfo()[2]);
-            } 
+			if($selectsize != "null")
+			{
+				if ($recherches->rowCount() > 0)
+				{
+					$query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+					$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+				}
+				else
+				{
+					$createUserBasket = "INSERT INTO basket (fk_users) VALUES ($IDPersonne);";
+					$addArticle = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+	
+					$dbh->query($createUserBasket) or die ("SQL Error in:<br> $createUserBasket <br>Error message:".$dbh->errorInfo()[2]);
+					$dbh->query($addArticle) or die ("SQL Error in:<br> $addArticle <br>Error message:".$dbh->errorInfo()[2]);
+				} 
+			}
+			else
+			{
+				echo "<section style='padding: 10px;'>
+                    <h2 class='t-center'>
+                        Taille épuisée, veuillez choisir un autre taille 
+                    </h2>
+                  </section>";
+			}
         }
         else
         {
@@ -170,7 +181,7 @@
 													}
 													else
 													{
-														echo"<option value='$id_size'>Article épuisé en $size</option>";
+														echo"<option value='null'>Article épuisé en $size</option>";
 													}
                                                 }
                                         echo "
