@@ -38,6 +38,8 @@
     session_start();
     require_once('fonctions.php');
 	ConnectDB();
+    // Show content in the bsaket 
+    require_once('top.php');
     
     extract($_POST);
 
@@ -65,10 +67,23 @@
 
 			if($selectsize != "null")
 			{
-				if ($recherches->rowCount() > 0)
+				if($recherches->rowCount() > 0)
 				{
-					$query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
-					$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                    $query = "SELECT id_orderlist, id_article, orderlist.quantity, fk_article, fk_basket from orderlist 
+                                inner join article on fk_article = id_article
+                                where fk_article = $id_article and fk_size = $selectsize;";
+                                
+                    $recherchearticles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                    if($recherchearticles->rowCount() > 0)
+                    {
+                        $query = "update orderlist set quantity = quantity + 1 where fk_article = $id_article;";
+                        $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                    }
+                    else
+                    {
+                        $query = "INSERT INTO orderlist (fk_article, fk_basket) VALUES ($id_article, (select id_basket from basket where fk_users = $IDPersonne));";
+                        $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                    }
 				}
 				else
 				{
@@ -101,7 +116,7 @@
     }
 	
 	// Show content in the bsaket 
-	require_once('top.php');
+	//require_once('top.php');
 
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                 INNER JOIN model on id_model = fk_model
