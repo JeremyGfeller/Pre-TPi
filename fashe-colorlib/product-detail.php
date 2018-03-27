@@ -37,8 +37,7 @@
 
     session_start();
     require_once('fonctions.php');
-    ConnectDB();
-    require_once('top.php');
+	ConnectDB();
     
     extract($_POST);
 
@@ -100,7 +99,10 @@
 		$query = "update article set quantity = quantity - 1 where id_article = $articleid;";
 		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
-    
+	
+	// Show content in the bsaket 
+	require_once('top.php');
+
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size

@@ -41,16 +41,15 @@
 
     require_once('fonctions.php');
     ConnectDB();
-
-
-	/* Header */
-    require_once('top.php');
     
     if(isset($_POST['deleteBasket']))
     {
         $query = "DELETE FROM orderlist WHERE fk_article = '$deleteBasket';";
         $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-    }
+	}
+
+	// Show content in the bsaket 
+	require_once('top.php');
     ?>
 	
 
