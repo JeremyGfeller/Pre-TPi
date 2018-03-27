@@ -81,7 +81,7 @@
 			}
 			else
 			{
-				echo "<section style='padding: 10px;'>
+				echo "<section style='padding-top: 150px;'>
                     <h2 class='t-center'>
                         Taille épuisée, veuillez choisir un autre taille 
                     </h2>
