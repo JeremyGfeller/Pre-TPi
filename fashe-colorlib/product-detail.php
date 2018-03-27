@@ -38,8 +38,6 @@
     session_start();
     require_once('fonctions.php');
 	ConnectDB();
-    // Show content in the bsaket 
-    require_once('top.php');
     
     extract($_POST);
 
@@ -116,7 +114,7 @@
     }
 	
 	// Show content in the bsaket 
-	//require_once('top.php');
+	require_once('top.php');
 
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                 INNER JOIN model on id_model = fk_model
