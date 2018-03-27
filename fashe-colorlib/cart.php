@@ -45,7 +45,7 @@
     if(isset($_POST['deleteBasket']))
     {
         $query = "DELETE FROM orderlist WHERE fk_article = '$deleteBasket';";
-        $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 	}
 
 	// Show content in the bsaket 
@@ -106,17 +106,13 @@
                                     <td class='column-3'>$model_prix.-</td>
                                     <td class='column-3'>$size</td>
                                     <td class='column-4'>
-                                        <div class='flex-w bo5 of-hidden w-size17'>
-                                            <button class='btn-num-product-down color1 flex-c-m size7 bg8 eff2'>
-                                                <i class='fs-12 fa fa-minus' aria-hidden='true'></i>
-                                            </button>
-
-                                            <input class='size8 m-text18 t-center num-product' type='number' name='num-product1' value='1'>
-
-                                            <button class='btn-num-product-up color1 flex-c-m size7 bg8 eff2'>
-                                                <i class='fs-12 fa fa-plus' aria-hidden='true'></i>
-                                            </button>
-                                        </div>
+										<select class='selection-2' name='quantity'>
+											<option value='1'>1</option>
+											<option value='2'>2</option>
+											<option value='3'>3</option>
+											<option value='4'>4</option>
+											<option value='5'>5</option>
+										</select>
                                     </td>
                                     <td class='column-5'>
                                         <form method='post'>
