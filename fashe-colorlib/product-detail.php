@@ -109,7 +109,7 @@
                     </h2>
                   </section>";
 		}
-		$query = "update article set quantity = quantity - 1 where id_article = $articleid;";
+		$query = "update article set quantity = quantity - 1 where id_article = $id_article;";
 		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
 	
