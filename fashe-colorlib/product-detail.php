@@ -54,18 +54,19 @@
     if(isset($_POST['basket']))
     {
         if(isset($UserName))
-        {
-            $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
-            $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-
-            $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
-            $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-            $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
-            @extract($rechercheid);          
+        {         
 
 			if($selectsize != "null")
 			{
-				if($recherches->rowCount() > 0)
+                $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
+                $recherches = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+
+                $query = "SELECT id_article FROM article where fk_size = $selectsize AND fk_model = $modelid;";
+                $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
+                @extract($rechercheid); 
+				
+                if($recherches->rowCount() > 0)
 				{
                     $query = "SELECT id_orderlist, id_article, orderlist.quantity, fk_article, fk_basket from orderlist 
                                 inner join article on fk_article = id_article
@@ -91,6 +92,8 @@
 					$dbh->query($createUserBasket) or die ("SQL Error in:<br> $createUserBasket <br>Error message:".$dbh->errorInfo()[2]);
 					$dbh->query($addArticle) or die ("SQL Error in:<br> $addArticle <br>Error message:".$dbh->errorInfo()[2]);
 				} 
+                $query = "update article set quantity = quantity - 1 where id_article = $id_article;";
+                $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 			}
 			else
 			{
@@ -109,8 +112,6 @@
                     </h2>
                   </section>";
 		}
-		$query = "update article set quantity = quantity - 1 where id_article = $id_article;";
-		$dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     }
 	
 	// Show content in the bsaket 
