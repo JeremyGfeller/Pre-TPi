@@ -79,99 +79,12 @@ extract($_SESSION);
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<a href='cart.php'><img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"></a>
 						<span class="header-icons-noti">
                             <?php
                                 echo panier();
                             ?>
                         </span>
-
-						<!-- Header cart noti -->
-						<div class="header-cart header-dropdown">
-                                <?php
-                                    if(isset($_SESSION['IDPersonne']))
-                                    {
-                                        $query = "SELECT id_basket, id_users, id_article, color, id_orderlist, size, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand FROM basket
-                                              inner join orderlist on fk_basket = id_basket
-                                              inner join users on fk_users = id_users
-                                              inner join article on fk_article = id_article
-                                              inner join size on fk_size = id_size
-                                              inner join color on fk_color = id_color
-                                              inner join model on fk_model = id_model
-                                              inner join brand on fk_brand = id_brand
-                                              WHERE fk_users = $IDPersonne;";
-                                        $baskets = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-                                        while($basket = $baskets->fetch())
-                                        {
-                                            extract($basket); // $id_basket, $id_users, $id_article, $color, $id_orderlist, $users_firstName, $size, $illustration, $orderlist.quantity, $users_lastName, $users_role, $model_name, $model_prix, $brand
-                                            echo "
-                                            <ul class='header-cart-wrapitem'>
-                                                <li class='header-cart-item'>
-                                                    <div class='header-cart-item-img'>
-                                                        <img src='images/articles/$illustration' alt='IMG'>
-                                                    </div>
-                                                    <div class='header-cart-item-txt'>
-                                                        <a href='cart.php' class='header-cart-item-name'>
-                                                            $brand - $model_name en $color
-                                                        </a>
-                                                        <span class='header-cart-item-info'>
-                                                            $model_prix.-
-                                                        </span>
-                                                    </div>
-                                                </li>
-                                            </ul>";
-                                        }
-                                    }
-                                    else
-                                    {
-                                        echo "Veuillez vous connecter";
-                                    }
-                                ?>
-
-							<div class="header-cart-total">
-								<?php
-                                    if(isset($_SESSION['IDPersonne']))
-                                    {
-                                        $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix) as total FROM yonik.orderlist
-                                                  inner join article on fk_article = id_article
-                                                  inner join model on fk_model = id_model
-                                                  inner join basket on fk_basket = id_basket
-                                                  where fk_users = (select fk_users from basket where fk_users = $IDPersonne);";
-                                        $additions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-                                        if ($additions->rowCount() > 0)
-                                        {
-                                            $addition = $additions->fetch(); 
-                                            extract($addition); //$id_users, $users_firstName, $users_lastName, $users_role, $users_login, $users_password, $hashPassword
-                                        }
-                                        
-                                        if($total != 0)
-                                        {
-                                            echo "Total: $total.-";
-                                        }
-                                        else
-                                        {
-                                            echo "Panier vide";
-                                        }
-                                    }
-                                ?>
-							</div>
-
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
-									</a>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
