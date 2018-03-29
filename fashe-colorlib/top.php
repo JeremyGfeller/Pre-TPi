@@ -1,7 +1,14 @@
 <?php 
+session_start();
 include_once('fonctions.php');
 ConnectDB();
 extract($_SESSION);
+
+
+	if(isset($_POST['toArticle']))
+	{
+		header("Location: product-detail.php?modelid=$toModel&articleid=$toArticle");
+	}
 ?>
 
 <header class="header1">
