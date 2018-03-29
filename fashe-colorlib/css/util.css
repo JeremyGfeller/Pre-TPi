@@ -3453,6 +3453,10 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 /*[ Size ]
 ///////////////////////////////////////////////////////////
 */
+.size0 {
+	width: 200px;
+	height: 40px;
+}
 .size1 {
 	width: 100%;
 	height: 40px;
@@ -3581,6 +3585,9 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 /*[ Width Size ]
 ///////////////////////////////////////////////////////////
 */
+.w-size0 {
+	width: 200px;
+}
 .w-size1 {
 	width: 161px;
 }
