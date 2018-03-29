@@ -55,7 +55,6 @@
     {
         if(isset($UserName))
         {         
-
 			if($selectsize != "null")
 			{
                 $query = "SELECT DISTINCT id_basket, fk_users from basket WHERE fk_users = $IDPersonne;";
@@ -106,7 +105,7 @@
         }
         else
         {
-            echo "<section style='padding: 10px;'>
+            echo "<section style='padding: 150px;'>
                     <h2 class='t-center'>
                         Merci de vous connecter pour commander cette article 
                     </h2>
