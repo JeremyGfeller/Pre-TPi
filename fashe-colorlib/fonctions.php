@@ -6,7 +6,7 @@ function ConnectDB()
 {
     // Toutes les infos nécessaires pour la connexion à une base de donnée
     $hostname = 'localhost';
-    $dbname = 'yonik';
+    $dbname = 'zira';
     $username = 'root';
     $password = '';
 
@@ -74,6 +74,7 @@ function afficherLogin()
 
 function loginBox()
 {
+    global $dbh; 
     extract($_SESSION);
     $login = "";
     if(isset($_SESSION['IDPersonne']))
@@ -90,12 +91,15 @@ function loginBox()
                     <input type='password' name='password' placeholder='Entrez votre mot de passe' required><br><br>
                     <input type='submit' value='Connexion'>    
                 </form>";
+
+        $dbh->quote($login);
     }  
     return $login;    
 }
 
 function inscription()
 {
+    global $dbh; 
     extract($_POST);
     extract($_SESSION);
     $registration = "";
@@ -109,6 +113,8 @@ function inscription()
                 <input type='password' name='password' placeholder='Entrez votre mot de passe' required><br><br>
                 <input type='submit' value='Inscription'>    
             </form>";
+
+            $dbh->quote($registration);
     }  
     return $registration;
 }
