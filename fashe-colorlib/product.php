@@ -215,19 +215,19 @@
                                     $typearticle = $_GET['typearticle'];
 
                                     $query2 = "SELECT id_article, id_model, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
-                                                INNER JOIN model on id_model = fk_model
+                                                INNER JOIN model ON id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
-                                                where fk_typeArticle = $typearticle
-                                                group by illustration;";
+                                                WHERE fk_typeArticle = $typearticle
+                                                GROUP BY illustration;";
                                     
                                     $articles = $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);   
                                 } 
                                 else
                                 {
                                     $query = "SELECT id_article, id_model, illustration, brand, model_name, model_prix, fk_typeArticle FROM article
-                                                INNER JOIN model on id_model = fk_model
+                                                INNER JOIN model ON id_model = fk_model
                                                 INNER JOIN brand ON fk_brand = id_brand
-                                                group by illustration;";
+                                                GROUP BY illustration;";
 
                                     $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                                 }                               

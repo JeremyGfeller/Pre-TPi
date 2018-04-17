@@ -28,12 +28,6 @@ function ConnectDB()
     }
 }
 
-if(isset($_POST['deconnexion']))
-{
-    unset($_SESSION['IDPersonne']);
-    unset($_SESSION['UserName']);
-}
-
 function panier()
 {
     global $dbh;
@@ -41,7 +35,7 @@ function panier()
     $sum = "";
     if(isset($IDPersonne))
     {
-        $query = "select count(id_orderlist) as somme from orderlist where fk_basket = $IDPersonne;";
+        $query = "select sum(quantity) as somme from orderlist where fk_basket = $IDPersonne;";
         $sumArticles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
         if ($sumArticles->rowCount() > 0)
         {
@@ -55,6 +49,12 @@ function panier()
         $sum .= "0";
     }
     return $sum;
+}
+
+if(isset($_POST['deconnexion']))
+{
+    unset($_SESSION['IDPersonne']);
+    unset($_SESSION['UserName']);
 }
 
 function afficherLogin()
