@@ -132,7 +132,7 @@
                                 </tr>";
                             }
 
-                            $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix * orderlist.quantity) as total FROM yonik.orderlist
+                            $query = "SELECT id_orderlist, orderlist.quantity, fk_article, fk_basket, sum(model_prix * orderlist.quantity) as total FROM zira.orderlist
                                       inner join article on fk_article = id_article
                                       inner join model on fk_model = id_model
                                       inner join basket on fk_basket = id_basket
