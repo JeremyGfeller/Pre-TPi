@@ -1,5 +1,5 @@
 -- Version: 1.0
--- Project: Yonik
+-- Project: zira
 -- Author: Jeremy GFELLER
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -7,11 +7,11 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema yonik
+-- Schema zira
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS yonik;
-CREATE SCHEMA IF NOT EXISTS yonik DEFAULT CHARACTER SET utf8;
-USE yonik;
+DROP SCHEMA IF EXISTS zira;
+CREATE SCHEMA IF NOT EXISTS zira DEFAULT CHARACTER SET utf8;
+USE zira;
 
 -- -----------------------------------------------------
 -- Table users
