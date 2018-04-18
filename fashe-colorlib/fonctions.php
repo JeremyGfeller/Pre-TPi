@@ -51,6 +51,10 @@ function panier()
             }
         }
     }
+    else
+    {
+        $sum .= "0";                
+    }
     return $sum;
 }
 
