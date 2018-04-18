@@ -41,12 +41,15 @@ function panier()
         {
             $sumArticle = $sumArticles->fetch();
             extract($sumArticle);
-            $sum .= "$somme";
+            if($somme > 0)
+            {
+                $sum .= "$somme";
+            }
+            else
+            {
+                $sum .= "0";                
+            }
         }
-    }
-    else
-    {
-        $sum .= "0";
     }
     return $sum;
 }
