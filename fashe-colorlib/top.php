@@ -131,16 +131,6 @@ if(isset($_POST['toArticle']))
 						</div>
 					</li>
 
-					<li class="item-topbar-mobile p-l-10">
-						<div class="topbar-social-mobile">
-							<a href="#" class="topbar-social-item fa fa-facebook"></a>
-							<a href="#" class="topbar-social-item fa fa-instagram"></a>
-							<a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
-							<a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
-							<a href="#" class="topbar-social-item fa fa-youtube-play"></a>
-						</div>
-					</li>
-
 					<li class="item-menu-mobile">
 						<a href="index.php">Accueil</a>
 					</li>
