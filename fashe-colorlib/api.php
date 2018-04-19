@@ -4,6 +4,7 @@
     ConnectDB();
     extract($_GET);
 
+    /* Search in the base the data for an article */
     $query = "SELECT id_article, illustration, quantity, brand, model_name, model_prix, size, color FROM article
                 inner join model on fk_model = id_model
                 inner join size on fk_size = id_size
@@ -13,6 +14,7 @@
                 
     $quantitys = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
+    /* Save the data in a array */
     while($quantity = $quantitys->fetch()) //fetch = aller chercher
     {
         extract($quantity); // $id_article, $illustration, $quantity, $brand, $model_name, $model_prix, $size, $color
