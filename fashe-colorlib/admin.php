@@ -47,6 +47,7 @@
     extract($_GET);
     extract($_POST);
     
+    /* Delete an article from the DB */
     if(isset($_POST['delete']))
     {    
         $model = "SELECT id_orderlist, quantity, fk_article, fk_basket FROM orderlist WHERE fk_article = $delete;";
@@ -61,6 +62,7 @@
         $dbh->query($delArticle) or die ("SQL Error in:<br> $delArticle <br>Error message:".$dbh->errorInfo()[2]);
     }
     
+    /* Apply the change for an article */
     if(isset($_POST['appliquer']))
     {  
         if($newPrice == "" && $newQuantity == "")
@@ -85,7 +87,6 @@
     }
     ?>
 	
-
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/connexion.jpg);">
 		<h2 class="l-text2 t-center">
@@ -100,6 +101,7 @@
 			<div class="container-table-cart pos-relative">
 				<div class="wrap-table-shopping-cart bgwhite">
 					<table class="table-shopping-cart">
+                        <!-- Table for the articles -->
 						<tr class="table-head">
 							<th class="column-1"></th>
 							<th class="column-2">Article - Taille</th>
@@ -110,6 +112,7 @@
                             <th class='column-7'>Supprimer</th>
 						</tr>
                         <?php
+                            /* Select the article from the DB */
                             $query = "SELECT id_article, id_model, quantity, illustration, brand, model_name, model_prix, size, color FROM article
                                       INNER JOIN model on id_model = fk_model
                                       INNER JOIN size on id_size = fk_size
@@ -119,6 +122,7 @@
                         
                             $administrations = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                         
+                            /* Show the article in the table */
                             while($administration = $administrations->fetch()) //fetch = aller chercher
                             {
                                 extract($administration); // $id_article, $id_model, $quantity, $illustration, $brand, $model_name, $model_prix, $size, $color  

@@ -66,6 +66,7 @@
 	<!-- Cart -->
     <?php
     
+    /* Check if we are connected */
     if(isset($UserName))
     {
         $query = "SELECT id_basket, id_users, id_article, id_orderlist, size, illustration, orderlist.quantity, users_lastName, users_role, model_name, model_prix, brand FROM basket
@@ -95,6 +96,7 @@
                                 <th class='column-3'>Supprimer</th>
                             </tr>";
 
+                            /* Show the basket from a user */
                             while($basket = $baskets->fetch())
                             {
                                 extract($basket); // $id_basket, $id_users, $id_article, $id_orderlist, $users_firstName, $size, $illustration, $orderlist.quantity, $users_lastName, $users_role, $model_name, $model_prix, $brand
@@ -167,7 +169,8 @@
                     </div>
                 </div>
         </section>";
-    }
+    } 
+    /* Show a message when we are not connected */
     else
     {
         echo "<section style='padding: 10px;'>

@@ -1,7 +1,7 @@
 <?php
 @session_start();
 extract($_SESSION);
-//Connection base de donnée
+// Connexion to the DB
 function ConnectDB()
 {
     // Toutes les infos nécessaires pour la connexion à une base de donnée
@@ -28,6 +28,7 @@ function ConnectDB()
     }
 }
 
+/* Show how many article there is in the basket for a user */
 function panier()
 {
     global $dbh;
@@ -57,13 +58,15 @@ function panier()
     }
     return $sum;
 }
-
+ 
+/* Disconnect a person */
 if(isset($_POST['deconnexion']))
 {
     unset($_SESSION['IDPersonne']);
     unset($_SESSION['UserName']);
 }
 
+/* Show with witch account we are connected */
 function afficherLogin()
 {
     extract($_SESSION);
@@ -79,6 +82,7 @@ function afficherLogin()
     return $login;    
 }
 
+/* Show the form for the login */
 function loginBox()
 {
     global $dbh; 
@@ -104,6 +108,7 @@ function loginBox()
     return $login;    
 }
 
+/* Show the form for the sign in */
 function inscription()
 {
     global $dbh; 

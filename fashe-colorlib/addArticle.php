@@ -47,20 +47,22 @@
     extract($_POST);
     extract($_FILES);
     
-    /*echo "POST: "; print_r($_POST); echo "<br>";
-    echo "FILES: "; print_r($_FILES); echo "<br>";*/
-    
+    /* Add a new article */
     if(isset($_POST['create']))
     {            
+        /* Check if the new brand not exist in the DB */
         $brand = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
         $brands = $dbh->query($brand) or die ("SQL Error in:<br> $brand <br>Error message:".$dbh->errorInfo()[2]);
    
+        /* Check if the new color not exist in the DB */
         $color = "SELECT id_color, color FROM color WHERE color = '$newColor';";
         $colors = $dbh->query($color) or die ("SQL Error in:<br> $color <br>Error message:".$dbh->errorInfo()[2]);
         
+        /* Check if the new model not exist in the DB */
         $model = "SELECT id_model, model_name, model_prix, fk_typearticle, fk_brand FROM model WHERE model_name = '$newModel';";
         $models = $dbh->query($model) or die ("SQL Error in:<br> $model <br>Error message:".$dbh->errorInfo()[2]);
                         
+        /* Insert the new brand in the DB */
         if($brands->rowCount() > 0)
         {}
         else
@@ -69,6 +71,7 @@
             $dbh->query($addBrand) or die ("SQL Error in:<br> $addBrand <br>Error message:".$dbh->errorInfo()[2]);
         }
         
+        /* Insert the new color in the DB */
         if($colors->rowCount() > 0)
         {}
         else
@@ -77,16 +80,19 @@
             $dbh->query($addColor) or die ("SQL Error in:<br> $addColor <br>Error message:".$dbh->errorInfo()[2]);
         }
         
+        /* Fetch the id of the new brand */
         $idBrand = "SELECT id_brand, brand FROM brand WHERE brand = '$newBrand';";
         $rechercheidBrands = $dbh->query($idBrand) or die ("SQL Error in:<br> $idBrand <br>Error message:".$dbh->errorInfo()[2]);
         $rechercheidBrand = $rechercheidBrands->fetch(); //fetch = aller chercher
         extract($rechercheidBrand);
         
+        /* Fetch the id of the new color */
         $idColor = "SELECT id_color, color FROM color WHERE color = '$newColor';";
         $rechercheidColors = $dbh->query($idColor) or die ("SQL Error in:<br> $idColor <br>Error message:".$dbh->errorInfo()[2]);
         $rechercheidColor = $rechercheidColors->fetch(); //fetch = aller chercher
         extract($rechercheidColor);
         
+        /* Insert the new model in the DB */
         if($models->rowCount() > 0)
         {}
         else
@@ -95,11 +101,13 @@
             $dbh->query($addModel) or die ("SQL Error in:<br> $addModel <br>Error message:".$dbh->errorInfo()[2]);
         }
         
+        /* Fetch the id of the new model */
         $idModel = "SELECT id_model, model_name FROM model WHERE model_name = '$newModel';";
         $rechercheidModels = $dbh->query($idModel) or die ("SQL Error in:<br> $idModel <br>Error message:".$dbh->errorInfo()[2]);
         $rechercheidModel = $rechercheidModels->fetch(); //fetch = aller chercher
         extract($rechercheidModel);
 
+        /* Add the illustrations of the new articles */
         if(isset($_FILES['illustration']) || isset($_FILES['illustration1']) || isset($_FILES['illustration2']))
         {    
             @$Extension = pathinfo($_FILES['illustration']['name'], PATHINFO_EXTENSION);
@@ -117,7 +125,6 @@
     }
     ?>
 	
-
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/connexion.jpg);">
 		<h2 class="l-text2 t-center">
@@ -128,130 +135,71 @@
 	<!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
 		<div class="container">
-			<!-- Cart item -->
-			<!--div class="container-table-cart pos-relative">
-				<div class="wrap-table-shopping-cart bgwhite"-->
-                    <?php
-                        echo "
-                            <div class='row'>
-                                <div class='col-md-3 p-b-30'></div>
-                                <div class='col-md-6 p-b-30'>
-                                    <form method='post' class='leave-comment' enctype='multipart/form-data'>
-                                        Première illustration: <input type='file' name='illustration' style='margin-bottom: 15px;'><br>
-                                        Deuxième illustration: <input type='file' name='illustration1' style='margin-bottom: 15px;'><br>
-                                        Troisième illustration: <input type='file' name='illustration2'><br><br>
-                                        
-                                        <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newBrand' placeholder='Entrer la marque' required>
-                                        </div>
+            <?php
+                echo "
+                <div class='row'>
+                    <div class='col-md-3 p-b-30'></div>
+                    <div class='col-md-6 p-b-30'>
+                        <form method='post' class='leave-comment' enctype='multipart/form-data'>
+                            Première illustration: <input type='file' name='illustration' style='margin-bottom: 15px;'><br>
+                            Deuxième illustration: <input type='file' name='illustration1' style='margin-bottom: 15px;'><br>
+                            Troisième illustration: <input type='file' name='illustration2'><br><br>
+                            
+                            <div class='bo4 of-hidden size15 m-b-20'>
+                                <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newBrand' placeholder='Entrer la marque' required>
+                            </div>
 
-                                        <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newModel' placeholder='Entrer le modèle'>
-                                        </div>
-                                        
-                                        Taille <br>
-                                        <select name='taille' id='taille' style='padding-right: 175px; margin-top: 10px; margin-bottom: 15px;'/>";
-                                            $query = "SELECT id_size, size FROM size;";
-                                            $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-                                            while($size = $sizes->fetch()) //fetch = aller chercher
-                                            {
-                                                extract($size); //$id_size, $size
-                                                echo "<option value='$id_size'>$size</option>";   
-                                            }
-                                        echo"
-                                        </select><br>
-                                        
-                                        Type d'article <br>
-                                        <select name='typeArticle' id='typeArticle' style='padding-right: 150px; margin-top: 10px; margin-bottom: 15px;'/>";
-                                            $query = "SELECT id_typeArticle, typeArticle FROM typearticle;";
-                                            $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-                                            while($size = $sizes->fetch()) //fetch = aller chercher
-                                            {
-                                                extract($size); //$id_typeArticle, $typeArticle
-                                                echo "<option value='$id_typeArticle'>$typeArticle</option>";   
-                                            }
-                                        echo"
-                                        </select>
+                            <div class='bo4 of-hidden size15 m-b-20'>
+                                <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newModel' placeholder='Entrer le modèle'>
+                            </div>
+                            
+                            Taille <br>
+                            <select name='taille' id='taille' style='padding-right: 175px; margin-top: 10px; margin-bottom: 15px;'/>";
+                                $query = "SELECT id_size, size FROM size;";
+                                $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                                while($size = $sizes->fetch()) //fetch = aller chercher
+                                {
+                                    extract($size); //$id_size, $size
+                                    echo "<option value='$id_size'>$size</option>";   
+                                }
+                            echo"
+                            </select><br>
+                            
+                            Type d'article <br>
+                            <select name='typeArticle' id='typeArticle' style='padding-right: 150px; margin-top: 10px; margin-bottom: 15px;'/>";
+                                $query = "SELECT id_typeArticle, typeArticle FROM typearticle;";
+                                $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
+                                while($size = $sizes->fetch()) //fetch = aller chercher
+                                {
+                                    extract($size); //$id_typeArticle, $typeArticle
+                                    echo "<option value='$id_typeArticle'>$typeArticle</option>";   
+                                }
+                            echo"
+                            </select>
 
 
-                                        <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newPrix' placeholder='Entrer le prix'>
-                                        </div>
-                                        
-                                        <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newColor' placeholder='Entrer la couleur'>
-                                        </div>
-                                        
-                                        <div class='bo4 of-hidden size15 m-b-20'>
-                                            <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newQuantity' placeholder='Entrer la quantité'>
-                                        </div>
-                                        
-                                        <div class='w-size25'>
-                                            <!-- Button -->
-                                            <button class='flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4' name='create'>
-                                                Envoyer
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>";
-                    ?>
-					<!--table class="table-shopping-cart">
-						<tr class="table-head">
-							<th class="column-1">Images</th>
-							<th class="column-2">Marque</th>
-							<th class="column-3">Modèle</th>
-							<th class="column-4">Taille</th>
-							<th class="column-5">Couleur</th>
-                            <th class='column-6'>Prix</th>
-                            <th class='column-7'>Quantité</th>
-						</tr-->
-                        <?php
-                        /*
-                        echo "
-                        <form method='post'>
-                            <tr class='table-row'>
-                                <td class='column-1'>
-                                    <div class='cart-img-product b-rad-4 o-f-hidden'>
-                                        <img src=''>
-                                    </div>
-                                </td>
-                                <td class='column-2'>
-                                    <input type='text' name='newBrand' placeholder='Entrer la marque'/>
-                                </td>
-                                <td class='column-3'>
-                                    <input type='text' name='newModel' placeholder='Entrer le modèle'/>
-                                </td>
-                                <td class='column-4'>
-                                    <select name='taille' id='taille'/>"; 
-                                        $query = "SELECT id_size, size FROM size;";
-                                        $sizes = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-                                        while($size = $sizes->fetch()) //fetch = aller chercher
-                                        {
-                                            extract($size); //$id_size, $size
-                                            echo "<option value='$id_size'>$size</option>";   
-                                        }
-                                    echo "
-                                    </select>
-                                </td>
-                                <td class='column-5'>Couleur</td>
-                                <td class='column-6'>Prix</td>
-                                <td class='column-7'>Quantité</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button type='submit' name='create' style='padding-left: 110px;'>
-                                        <img src='images/icons/plus.png' alt='IMG-PRODUCT'> 
-                                    </button>
-                                </td>
-                            </tr>
-                        </form>"; */
-                    ?>
-					<!--/table>
-				</div>
-			</div-->
+                            <div class='bo4 of-hidden size15 m-b-20'>
+                                <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newPrix' placeholder='Entrer le prix'>
+                            </div>
+                            
+                            <div class='bo4 of-hidden size15 m-b-20'>
+                                <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newColor' placeholder='Entrer la couleur'>
+                            </div>
+                            
+                            <div class='bo4 of-hidden size15 m-b-20'>
+                                <input class='sizefull s-text7 p-l-22 p-r-22' type='text' name='newQuantity' placeholder='Entrer la quantité'>
+                            </div>
+                            
+                            <div class='w-size25'>
+                                <!-- Button -->
+                                <button class='flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4' name='create'>
+                                    Envoyer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>";
+            ?>
 		</div>
 	</section>
 

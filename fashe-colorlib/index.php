@@ -135,6 +135,7 @@
 				<div class="slick2">
 					<?php 
 
+					/* Select 10 article random in the DB and show in the index page */
 					$query = "SELECT id_article, id_model, brand, model_name, model_prix, illustration FROM article inner join model on fk_model = id_model inner join brand on fk_brand = id_brand WHERE quantity > 0 GROUP BY fk_model ORDER BY RAND() LIMIT 10;";
 					$randomarticles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 

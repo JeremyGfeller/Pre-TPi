@@ -47,12 +47,9 @@
         $articleid = $_GET['articleid'];
     } 
     
-    /*echo "POST: "; print_r($_POST); echo "<br>";
-    echo "SESSION: "; print_r($_SESSION); echo "<br>";
-    echo "GET: "; print_r($_GET); echo "<br>";*/
-    
     if(isset($_POST['basket']))
     {
+        /* Check if we are connected */
         if(isset($UserName))
         {         
 			if($selectsize != "null")
@@ -64,7 +61,8 @@
                 $rechercheids = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
                 $rechercheid = $rechercheids->fetch(); //fetch = aller chercher
                 @extract($rechercheid); 
-				
+                
+                /* Put the article in the basket */
                 if($recherches->rowCount() > 0)
 				{
                     $query = "SELECT id_orderlist, id_article, orderlist.quantity, fk_article, fk_basket from orderlist 
@@ -93,7 +91,8 @@
 				} 
                 $query = "update article set quantity = quantity - 1 where id_article = $id_article;";
                 $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
-			}
+            }
+            /* Show a message when there is no size enable */
 			else
 			{
 				echo "<section style='padding-top: 150px;'>
@@ -103,6 +102,7 @@
                   </section>";
 			}
         }
+        /* Show a message if we are not connected */
         else
         {
             echo "<section style='padding: 150px;'>
@@ -116,6 +116,7 @@
 	// Show content in the bsaket 
 	require_once('top.php');
 
+    /* Take the article we selected */
     $query = "SELECT id_article, quantity, illustration, illustration1, illustration2, brand, model_name, model_prix, size, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size
@@ -126,6 +127,7 @@
 
     $articles = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
     
+    /* Take every size for the model */
     $query2 = "SELECT id_article, id_model, model_name, id_size, quantity, size, id_color, color FROM article
                 INNER JOIN model on id_model = fk_model
                 INNER JOIN size on id_size = fk_size
@@ -135,6 +137,7 @@
 
     $details = $dbh->query($query2) or die ("SQL Error in:<br> $query2 <br>Error message:".$dbh->errorInfo()[2]);
 
+    /* Show the article we selected */
     while($article = $articles->fetch()) //fetch = aller chercher
     {
         extract($article); // $id_article, $quantity, $illustration, $illustration1, $illustration2, $brand, $model_name, $model_prix, $size, $color

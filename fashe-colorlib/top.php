@@ -2,6 +2,7 @@
 include_once('fonctions.php');
 ConnectDB();
 
+/* Redirection on an article when you click on it from the index.html */
 if(isset($_POST['toArticle']))
 {
     header("Location: product-detail.php?modelid=$toModel&articleid=$toArticle");
@@ -14,7 +15,10 @@ if(isset($_POST['toArticle']))
 			<div class="topbar">
 				<div class="topbar-child2">
 					<span class="topbar-email">
-						<?php echo afficherLogin(); ?>
+						<?php 
+							/* Show with witch count we are connected */
+							echo afficherLogin(); 
+						?>
 					</span>
 				</div>
 			</div>
@@ -50,7 +54,8 @@ if(isset($_POST['toArticle']))
 								<a href="cart.php">Panier</a>
 							</li>
 
-							<?php 
+							<?php
+								/* Show a tab if we are an admin */ 
                                 if(@$_SESSION['role'] == 0 & @$_SESSION['UserName'] != "")
                                 {
                                     echo "
@@ -78,6 +83,7 @@ if(isset($_POST['toArticle']))
 						<a href='cart.php'><img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"></a>
 						<span class="header-icons-noti">
                             <?php
+								/* Show the basket and how many article in it */
                                 echo panier();
                             ?>
                         </span>
@@ -106,7 +112,10 @@ if(isset($_POST['toArticle']))
 					<div class="header-wrapicon2">
 						<a href='cart.php'><img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON"></a>
 						<span class="header-icons-noti">
-							<?php echo panier(); ?>
+							<?php 
+								/* Show the basket and how many article in it */
+								echo panier();
+							 ?>
 						</span>
 					</div>
 				</div>
@@ -126,7 +135,10 @@ if(isset($_POST['toArticle']))
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<div class="topbar-child2-mobile">
 							<span class="topbar-email">
-                                <?php echo afficherLogin(); ?>
+								<?php 
+									/* Show with witch count we are connected */
+									echo afficherLogin();
+								?>
 							</span>
 						</div>
 					</li>

@@ -38,7 +38,9 @@
 
     require_once('fonctions.php');
     ConnectDB();
+	require_once('top.php');
 
+	/* The function to sign in */
     if(isset($_POST['firstName']))
     {
 		extract($_POST);
@@ -46,6 +48,7 @@
 		$query = "SELECT id_users, users_firstName, users_lastName, users_role, users_login, users_password, password('$password') as hashPassword FROM users where users_login = '$login';";
 		$checkconnexion = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 		
+		/* Check if the account existing */
 		if ($checkconnexion->rowCount() > 0)
         {
             echo "<section style='padding-top: 10px;'>
@@ -54,6 +57,7 @@
                     </h2>
                   </section>";
 		}
+		/* Put the name in the DB */
 		else
 		{
 			$query = "INSERT INTO users (users_firstName, users_lastName, users_role, users_login, users_password) VALUES ('$firstName', '$lastName', '$role', '$login', password('$password'));";  
@@ -71,7 +75,8 @@
 				$_SESSION['role'] = $role;
 			}
 		}
-    }   
+	}   
+	/* The function to log in */
     else if(isset($_POST['login']))
     {
         $login = $_POST['login'];
@@ -80,6 +85,7 @@
         $query = "SELECT id_users, users_firstName, users_lastName, users_role, users_login, users_password, password('$password') as hashPassword FROM users where users_login = '$login';";
         $connexions = $dbh->query($query) or die ("SQL Error in:<br> $query <br>Error message:".$dbh->errorInfo()[2]);
 
+		/* Connect the person */
         if ($connexions->rowCount() > 0)
         {
             $connexion = $connexions->fetch(); 
@@ -91,9 +97,10 @@
 				$_SESSION['UserName'] = "$users_firstName $users_lastName";
 				$_SESSION['role'] = $users_role;
 			}
+			/* Problem with the connexion */
 			else
 			{
-				echo "<section style='margin-top: 10px;'>
+				echo "<section style='padding-top: 10px;'>
 						<h2 class='t-center'>
 							Login ou mot de passe faux 
 						</h2>
@@ -111,6 +118,7 @@
 					<div class="col-md-12 col-lg-12 p-b-75">
 						<div class="p-r-50 p-r-0-lg">
 							<?php	
+								/* Form for the log in and the sign in */
 								if(!isset($_SESSION['IDPersonne']))
 								{
 									echo "<div class='item-blog p-b-80 t-center'>
