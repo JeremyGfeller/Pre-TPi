@@ -38,7 +38,6 @@
 
     require_once('fonctions.php');
     ConnectDB();
-	require_once('top.php');
 
 	/* The function to sign in */
     if(isset($_POST['firstName']))
@@ -51,7 +50,7 @@
 		/* Check if the account existing */
 		if ($checkconnexion->rowCount() > 0)
         {
-            echo "<section style='padding-top: 10px;'>
+            echo "<section style='padding-top: 150px;'>
                     <h2 class='t-center'>
                         Ce pseudo éxiste déjà 
                     </h2>
@@ -100,14 +99,16 @@
 			/* Problem with the connexion */
 			else
 			{
-				echo "<section style='padding-top: 10px;'>
+				echo "<section style='padding-top: 150px;'>
 						<h2 class='t-center'>
 							Login ou mot de passe faux 
 						</h2>
 					</section>";
 			}
 		}
-    }
+	} 
+	
+	/* Header */
 	require_once('top.php');
     ?>
 	<body class="animsition">
