@@ -110,13 +110,8 @@
         /* Add the illustrations of the new articles */
         if(isset($_FILES['illustration']) || isset($_FILES['illustration1']) || isset($_FILES['illustration2']))
         {    
-            @$Extension = pathinfo($_FILES['illustration']['name'], PATHINFO_EXTENSION);
             @$illustration = $_FILES['illustration']['name'];
-            
-            @$Extension1 = pathinfo($_FILES['illustration1']['name'], PATHINFO_EXTENSION);
             @$illustration1 = $_FILES['illustration1']['name']; 
-            
-            @$Extension2 = pathinfo($_FILES['illustration2']['name'], PATHINFO_EXTENSION);
             @$illustration2 = $_FILES['illustration2']['name']; 
 
             $addArticle = "INSERT INTO article (quantity, illustration, illustration1, illustration2, fk_color, fk_size, fk_model) VALUES ('$newQuantity', '$illustration', '$illustration1', '$illustration2', '$id_color', '$taille', '$id_model');";
